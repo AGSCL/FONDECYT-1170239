@@ -1,0 +1,3 @@
+"0","copiar_nombres(data.frame(original = colnames(BD_2020), clean_names = colnames(janitor::clean_names(BD_2020))))
+"
+"0",""
