@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1584652205129.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1508CA5A",
+    "lastKnownWriteTime" : 1585127645,
+    "last_content_update" : 1585127646063,
+    "path" : "G:/Mi unidad/DOCUMENTOS/6.TESIS 2018/Codebook_FONDECYT_1170239/codebook.Rmd",
+    "project_path" : "codebook.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "71,16",
+        "last_setup_crc32" : "",
+        "scrollLine" : "52",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

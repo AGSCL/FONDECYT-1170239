@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+BDD 06.07.18.dta
+*.dta
+BD_2020
+BD_2020.sav
+BD_2020_exp.dta
+BD_2020_exp.sav
+NAQ_LCA_classpost_NAQ.dta
+NAQ_LCA_classpost_CULORG.dta
+BD_2020_compilacion_versiones.dta
+BD_2020.csv

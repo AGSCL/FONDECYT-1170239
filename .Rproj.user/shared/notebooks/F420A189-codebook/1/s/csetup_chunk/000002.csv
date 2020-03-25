@@ -1,0 +1,20 @@
+"0","if(!require(janitor)){install.packages(""janitor"")}
+"
+"2","Loading required package: janitor
+"
+"2","
+Attaching package: ‘janitor’
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    chisq.test, fisher.test
+
+"
+"0","if(!require(rio)){install.packages(""rio"")}"
+"2","Loading required package: rio
+"
+"2","package ‘rio’ was built under R version 3.6.3"
+"2","The following rio suggested packages are not installed: ‘csvy’, ‘feather’, ‘fst’, ‘hexView’, ‘rmatio’
+Use 'install_formats()' to install them
+"
