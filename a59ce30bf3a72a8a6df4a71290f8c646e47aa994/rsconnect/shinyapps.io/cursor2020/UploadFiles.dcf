@@ -1,0 +1,12 @@
+name: UploadFiles
+title: UploadFiles
+username:
+account: cursor2020
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1999394
+bundleId: 2929094
+url: https://cursor2020.shinyapps.io/UploadFiles/
+when: 1585254436.42979
+asMultiple: FALSE
+asStatic: FALSE
