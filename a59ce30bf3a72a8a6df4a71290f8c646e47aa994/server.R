@@ -1,6 +1,5 @@
 if(!require(rio)){install.packages("rio")}
 options(shiny.maxRequestSize = 30*1024^2)
-
 ## --------
 ## server.R
 ## --------
