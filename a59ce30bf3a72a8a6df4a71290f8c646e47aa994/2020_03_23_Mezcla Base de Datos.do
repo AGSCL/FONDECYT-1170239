@@ -25,13 +25,13 @@ _est_culorg_c6 _est_culorg_c7 _est_culorg_c8  _est_logit _est_melogit _est_CIM
 
  drop _merge
  
-save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",replace
 
 *********************************************************************************
 ************************ AGREGAR VARIABLES QUE NO ESTÁN Y DESCARTAR *****************
 ******************************************OTRAS**********************************
 
-use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",clear
+use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",clear
 
 *definir bases de datos de trabajo (sólo stata 16)
 frame create principio_marzo
@@ -50,7 +50,7 @@ frames dir
 *
 frame change principio_marzo
 
-use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020_compilacion_versiones.dta",clear
+use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020_compilacion_versiones.dta",clear
 
 *Ver como se comportan y diferencias entre las variables con 01¨
 *Hasta ahora, sólo naq sum cuartil es distinta de su par
@@ -109,7 +109,7 @@ tab LID_DES_Dic_logit
 
 *ACOSO_AUTO_REC2 es redundante.
 
-save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",replace
 
 ***************************************************
 *******3*** Paper Vulnerabilidad
@@ -121,7 +121,7 @@ save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta
 
 ***************************************************
 *******4*** Paper Cultura
-use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",replace
 
 *está redundante
 
@@ -172,11 +172,11 @@ recode cluster_rec2_final 3/6=0 1=0 2=1, gen(cluster_rec2_binary)
 
 **Por lo visto no estoy rescatando el verdadero classpost de la variable
 
-save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",replace
 
 ***********************
 *Obtener classpost sin errores
-use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",clear
+use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",clear
 *frame change finales_marzo
 *frame drop naq_lca_cultura
 
@@ -206,13 +206,13 @@ use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta"
 
 *me quedo con lo importante y guardo la base
 	keep SbjNum  classpost_culorg_alt*
-	save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\NAQ_LCA_classpost_CULORG.dta",replace
+	save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\NAQ_LCA_classpost_CULORG.dta",replace
 
 *vuelvo a finales_marzo
 	frames dir
 frames change finales_marzo
 
-	merge 1:1 SbjNum using "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\NAQ_LCA_classpost_CULORG.dta"
+	merge 1:1 SbjNum using "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\NAQ_LCA_classpost_CULORG.dta"
 
 *cluster_rec_final es de 21-04-19, desde ahí que hago cluster_rec2_final	
 	drop cluster_rec2_final
@@ -241,12 +241,12 @@ frames change finales_marzo
 
 frame drop naq_lca_cultura
 
- save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+ save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",replace
 
 *************************************************
 ******5*** Ximena y Amalia
 
-use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",clear
+use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",clear
 frames dir
 
 *Existe
@@ -434,13 +434,13 @@ tab1 LID_DES_Dic LID_DES_Leyman
 recode A23 1=0 2/3=1, gen(acos_psico_freq) label("Frecuencia Acoso Psicológico seguido y muy seguido")
 label variable acos_psico_freq "Frecuencia Acoso Psicológico seguido y muy seguido"
 
- save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+ save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",replace
 
 
 *************************************************
 ******6*** Seminario y Variables Artículo Magdalena
 
- use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",clear
+ use "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",clear
 
 	 recode A16 99=., gen (carga_dom) label("Carga doméstica") //coincide con magda
 	 recode A54 99=. 1/4=1 5/10=0, gen (Educacion_media) label("Educación Ens Media") //231 172 403, coincide con magda
@@ -473,7 +473,7 @@ label variable acos_psico_freq "Frecuencia Acoso Psicológico seguido y muy segu
 	label define vul 1 "Sí", replace
 	label define vul 0 "No", replace
 
- save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+ save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",replace
 
 ***************************************************
 *******7*** Paper ROC y LCA NAQ
@@ -507,12 +507,12 @@ label variable acos_psico_freq "Frecuencia Acoso Psicológico seguido y muy segu
 	*me quedo con los valores obtenidos directamente.
 	keep SbjNum expclass_naq_alt_* classpost_naq_def_*
 
-	save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\NAQ_LCA_classpost_NAQ.dta",replace
+	save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\NAQ_LCA_classpost_NAQ.dta",replace
 
 frame change finales_marzo
 	
 	drop _merge
-	merge 1:1 SbjNum using "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\NAQ_LCA_classpost_NAQ.dta"
+	merge 1:1 SbjNum using "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\NAQ_LCA_classpost_NAQ.dta"
 
 	* Son distintos. Me quedo con el último.
 	tab1 expclass_naq_final_* expclass_naq_alt_*
@@ -573,5 +573,5 @@ LID_DES14_clus
 
 sort SbjNum
 
-save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\a59ce30bf3a72a8a6df4a71290f8c646e47aa994\BD_2020.dta",replace
 export delimited using "BD_2020_input", delimiter(";") replace
