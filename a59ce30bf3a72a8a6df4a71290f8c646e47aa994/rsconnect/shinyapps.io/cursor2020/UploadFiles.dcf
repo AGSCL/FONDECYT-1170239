@@ -5,8 +5,9 @@ account: cursor2020
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1999394
-bundleId: 2929528
+bundleId: 2931621
 url: https://cursor2020.shinyapps.io/UploadFiles/
-when: 1585259928.52794
+when: 1585309069.39072
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: 2020-03-06 combinacion bds.do|2020_03_23_Mezcla Base de Datos.do|21-04-19 (BD_05_02_19) CULORG.csv|21-04-19 (BD_05_02_19) CULORG.sav|base.sav|BD_2020.csv|BD_2020.dta|BD_2020_compilacion_versiones.dta|BD_2020_exp.dta|BD_2020_exp.sav|codebook.html|codebook.Rmd|data.sav|descartando casos y limpiando base de datos mar 2020.do|desktop.ini|Etiquetas Finales BD_2020 2020-03-06.xlsx|index.md|Libro de C?digos.xlsx|mtcars.sav|NAQ_LCA_classpost_CULORG.dta|NAQ_LCA_classpost_NAQ.dta|Tratamiento de Variables FONDECYT 1170239 2020.docx|figure

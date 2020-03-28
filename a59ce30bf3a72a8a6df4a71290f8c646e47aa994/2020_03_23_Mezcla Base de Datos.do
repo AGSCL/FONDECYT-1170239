@@ -574,3 +574,4 @@ LID_DES14_clus
 sort SbjNum
 
 save "G:\Mi unidad\DOCUMENTOS\6.TESIS 2018\Codebook_FONDECYT_1170239\BD_2020.dta",replace
+export delimited using "BD_2020_input", delimiter(";") replace

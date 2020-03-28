@@ -1,0 +1,693 @@
+SET DECIMAL=DOT.
+
+DATA LIST FILE= "21-04-19 (BD_05_02_19) CULORG.csv"  free (",")
+ENCODING="Locale"
+/ SbjNum N_PERSONA A2 A3 A4 A5 A6 A7 A8 A9 A10 A11 A12_O1 A12_O2 A12_O3 
+ A12_O4 A12_O5 A12_O6 A12_Otra_1 A12_Otra_2 A13 A14 A14_1 A15 A15_1 
+ A16 A16_1 A17 A18_top_1 A18_top_2 A18_top_3 A18_top_4 A18_top_5 
+ A18_top_6 A18_top_7 A18_top_8 A18_top_9 A18_top_10 A19_top_1 
+ A19_top_2 A19_top_3 A19_top_4 A20_1_Top_1 A20_1_Top_2 A20_1_Top_3 
+ A20_1_Top_4 A20_1_Top_5 A20_1_Top_6 A20_1_Top_7 A20_1_Top_8 
+ A20_1_Top_9 A20_1_Top_10 A20_1_Top_11 A20_1_Top_12 A20_2_Top_13 
+ A20_2_Top_14 A20_2_Top_15 A20_2_Top_16 A20_2_Top_17 A20_2_Top_18 
+ A20_2_Top_19 A20_2_Top_20 A20_2_Top_21 A20_2_Top_22 A20_2_Top_23 
+ A20_2_Top_24 A21 A21_1 A23 A25 A27 A28 A29_01 A29_02 A29_1 A22 A24 
+ A26 A30 A31_top_1 A31_top_2 A31_top_3 A31_top_4 A31_top_5 A31_top_6 
+ A31_top_7 A31_top_8 A31_top_9 A31_top_10 A31_top_11 A31_top_12 
+ A31_top_13 A31_top_14 A31_top_15 A31_top_16 A32 A33_Coded_1 
+ A33_Coded_2 A33_Coded_3 A34_top_1 A34_top_2 A34_top_3 A34_top_4 
+ A34_top_5 A34_top_6 A34_top_7 A34_top_8 A34_top_9 A34_top_10 
+ A35_top_1 A35_top_2 A35_top_3 A35_top_4 A35_top_5 A35_top_6 A36 A37_1 
+ A37_2 A37_3 A38_top_1 A38_top_2 A38_top_3 A38_top_4 A38_top_5 
+ A38_top_6 A38_top_7 A38_top_8 A38_top_9 A38_top_10 A38_top_11 
+ A38_top_12 A38_top_13 A38_top_14 A39_top_1 A39_top_2 A39_top_3 
+ A39_top_4 A39_top_5 A39_top_6 A39_top_7 A40 A41 A42 A43_top_1 
+ A43_top_2 A43_top_3 A43_top_4 A43_top_5 A44 A45_O1 A45_O2 A45_O3 
+ A45_O4 A45_O5 A46_top_1 A46_top_12 A46_top_13 A47_top_1 A47_top_2 
+ A47_top_3 A47_top_4 A47_top_5 A47_top_6 A47_top_7 A48 A49 A50 A51_1 
+ A51_2 A51_3 A52 A53 A54 A56 A55 A57_1 A63 A58 A59 A60 A61 A62 weight 
+ zona gse edux ocux Edad Tamano_de_la_empresa A1x1_Coded_1 
+ A1x2_Coded_1 A11_RECOD A48A49 depre estrechez mujer psicotrop 
+ frec_acos21_1 frec_acos_ecotest testigo k2_muyelevado k2_elevado k6_2 
+ prec1 prec2 prec4 prec5 prec6 antiguedad politrab desempleo trabdom 
+ atpub Khab Kcont latdec latdec_dic democ prec8 prec9 turnos 
+ estabilidad prec7 democ_dic vul1 vul2 vul3 vul4 vul5 vul6 vul7 vul 
+ auditc prec3r aposoc1 aposoc2 aposoc3 aposoc4 aposoc5 aposoc6 
+ aposoc_tot tenpsi iso salgen climasex culorg1 culorg2 culorg3 cultura 
+ LID_DES1 LID_DES2 LID_DES3 LID_DES4 LID_DES5 LID_DES6 LID_DES7 
+ LID_DES8 LID_DES9 LID_DES10 LID_DES11 LID_DES12 LID_DES13 LID_DES14 
+ LID_DES1_rec LID_DES2_rec LID_DES3_rec LID_DES4_rec LID_DES5_rec 
+ LID_DES6_rec LID_DES7_rec LID_DES8_rec LID_DES9_rec LID_DES10_rec 
+ LID_DES11_rec LID_DES12_rec LID_DES13_rec LID_DES14_rec LF LA LC NAQ1 
+ NAQ2 NAQ3 NAQ4 NAQ5 NAQ6 NAQ7 NAQ8 NAQ9 NAQ10 NAQ11 NAQ12 NAQ13 NAQ14 
+ NAQ15 NAQ16 NAQ17 NAQ18 NAQ19 NAQ20 NAQ21 NAQ22 NAQ1_rec NAQ2_rec 
+ NAQ3_rec NAQ4_rec NAQ5_rec NAQ6_rec NAQ7_rec NAQ8_rec NAQ9_rec 
+ NAQ10_rec NAQ11_rec NAQ12_rec NAQ13_rec NAQ14_rec NAQ15_rec NAQ16_rec 
+ NAQ17_rec NAQ18_rec NAQ19_rec NAQ20_rec NAQ21_rec NAQ22_rec NAQ_Dic 
+ NAQ_Leyman NAQ_MyE NAQ_A mas_horas menos45 quieren_mas prec3 prec 
+ precr precr1 tamano r1 r2 r3 r4 r5 r6 r7 e1 e2 e3 esfuerzo 
+ recompensas desbalance desbalance_dic LA_rec LF_rec LC_rec LF_Leyman 
+ LA_Leyman LC_Leyman NAQ_sum NAQ_sum_cuartil k6 s1 s2 s3 s4 s5 satis 
+ satis_terc ocuprev NAQ_R_AF_rec NAQ_R_AP_rec NAQ_R_RT_rec 
+ NAQ_AF_Leyman NAQ_AP_Leyman NAQ_RT_Leyman NAQ_AF_MyE NAQ_AP_MyE 
+ NAQ_RT_MyE NAQ_AF_A NAQ_AP_A NAQ_RT_A satlab_rec ARAUCARIA_ACOSO 
+ ACOSO_AUTO ACOSO_AUTO_REC NAQ_sum_ROC NAQ_sum_ROC2 NAQ_sum_ROC_3cat 
+ culorg1_ext culorg3_ext culorg2_ext hombre autonaq _est_culorg_ext_c1 
+ NAQ1_clus NAQ2_clus NAQ3_clus NAQ4_clus NAQ5_clus NAQ6_clus NAQ7_clus 
+ NAQ8_clus NAQ9_clus NAQ10_clus NAQ11_clus NAQ12_clus NAQ13_clus 
+ NAQ14_clus NAQ15_clus NAQ16_clus NAQ17_clus NAQ18_clus NAQ19_clus 
+ NAQ20_clus NAQ21_clus NAQ22_clus LID_DES1_clus LID_DES2_clus 
+ LID_DES3_clus LID_DES4_clus LID_DES5_clus LID_DES6_clus LID_DES7_clus 
+ LID_DES8_clus LID_DES9_clus LID_DES10_clus LID_DES11_clus 
+ LID_DES12_clus LID_DES13_clus LID_DES14_clus NAQ23 NAQ24 NAQ23_rec 
+ NAQ24_rec NAQ_R_incivismo_rec NAQ_Inciv_Leyman clus2_2clas _est_b1 
+ prev3 superv ocuprev_rec SECT_PRIV cont_trab org_sind gse_ac3 
+ jef_hogar agr_fisica acos_sex bajarecompensa altoesfuerzo 
+ _est_culorg_ext_c2 _est_culorg_ext_c3 _est_culorg_ext_c4 
+ _est_culorg_ext_c5 _est_culorg_ext_c6 _est_culorg_ext_c7 
+ _est_culorg_ext_c8 _est_culorg_ext_c9 _est_culorg_ext_c10 
+ _est_culorg_ext_c11 _est_culorg_ext_c12 _est_culorg_ext_c13 
+ _est_culorg_ext_c14 _est_culorg_ext_c15 _est_culorg_ext_c6_FINAL 
+ _est_culorg_ext_c6_FINAL_est expclass_CULORG_1 expclass_CULORG_2 
+ expclass_CULORG_3 expclass_CULORG_4 expclass_CULORG_5 
+ expclass_CULORG_6 _est_culorg_c2 _est_culorg_c3 _est_culorg_c4 
+ _est_culorg_c5 _est_culorg_c6 _est_culorg_c7 _est_culorg_c8 proc_res 
+ bienst_tarea laxo_estr * cluster (A8) cluster_rec cluster_rec2 
+ _est_logit _est_melogit _est_CIM expclass_CULORG_final_1 
+ expclass_CULORG_final_2 expclass_CULORG_final_3 
+ expclass_CULORG_final_4 expclass_CULORG_final_5 
+ expclass_CULORG_final_6 classprior1 classprior2 classprior3 
+ classprior4 classprior5 classprior6 classpost1 classpost2 classpost3 
+ classpost4 classpost5 classpost6 rec_expclass_CULORG_final_1 
+ rec_expclass_CULORG_final_2 rec_expclass_CULORG_final_3 
+ rec_expclass_CULORG_final_4 rec_expclass_CULORG_final_5 
+ rec_expclass_CULORG_final_6 * cluster_final (A8) cluster_rec_final 
+ cluster_rec2_final 
+  .
+
+VARIABLE LABELS
+SbjNum "SbjNum" 
+ N_PERSONA "N_PERSONA" 
+ A2 "A2" 
+ A3 "A3" 
+ A4 "A4" 
+ A5 "A5" 
+ A6 "A6" 
+ A7 "A7" 
+ A8 "A8" 
+ A9 "A9" 
+ A10 "A10" 
+ A11 "A11" 
+ A12_O1 "A12_O1" 
+ A12_O2 "A12_O2" 
+ A12_O3 "A12_O3" 
+ A12_O4 "A12_O4" 
+ A12_O5 "A12_O5" 
+ A12_O6 "A12_O6" 
+ A12_Otra_1 "A12_Otra_1" 
+ A12_Otra_2 "A12_Otra_2" 
+ A13 "A13" 
+ A14 "A14" 
+ A14_1 "A14_1" 
+ A15 "A15" 
+ A15_1 "A15_1" 
+ A16 "A16" 
+ A16_1 "A16_1" 
+ A17 "A17" 
+ A18_top_1 "A18_top_1" 
+ A18_top_2 "A18_top_2" 
+ A18_top_3 "A18_top_3" 
+ A18_top_4 "A18_top_4" 
+ A18_top_5 "A18_top_5" 
+ A18_top_6 "A18_top_6" 
+ A18_top_7 "A18_top_7" 
+ A18_top_8 "A18_top_8" 
+ A18_top_9 "A18_top_9" 
+ A18_top_10 "A18_top_10" 
+ A19_top_1 "A19_top_1" 
+ A19_top_2 "A19_top_2" 
+ A19_top_3 "A19_top_3" 
+ A19_top_4 "A19_top_4" 
+ A20_1_Top_1 "A20_1_Top_1" 
+ A20_1_Top_2 "A20_1_Top_2" 
+ A20_1_Top_3 "A20_1_Top_3" 
+ A20_1_Top_4 "A20_1_Top_4" 
+ A20_1_Top_5 "A20_1_Top_5" 
+ A20_1_Top_6 "A20_1_Top_6" 
+ A20_1_Top_7 "A20_1_Top_7" 
+ A20_1_Top_8 "A20_1_Top_8" 
+ A20_1_Top_9 "A20_1_Top_9" 
+ A20_1_Top_10 "A20_1_Top_10" 
+ A20_1_Top_11 "A20_1_Top_11" 
+ A20_1_Top_12 "A20_1_Top_12" 
+ A20_2_Top_13 "A20_2_Top_13" 
+ A20_2_Top_14 "A20_2_Top_14" 
+ A20_2_Top_15 "A20_2_Top_15" 
+ A20_2_Top_16 "A20_2_Top_16" 
+ A20_2_Top_17 "A20_2_Top_17" 
+ A20_2_Top_18 "A20_2_Top_18" 
+ A20_2_Top_19 "A20_2_Top_19" 
+ A20_2_Top_20 "A20_2_Top_20" 
+ A20_2_Top_21 "A20_2_Top_21" 
+ A20_2_Top_22 "A20_2_Top_22" 
+ A20_2_Top_23 "A20_2_Top_23" 
+ A20_2_Top_24 "A20_2_Top_24" 
+ A21 "A21" 
+ A21_1 "A21_1" 
+ A23 "A23" 
+ A25 "A25" 
+ A27 "A27" 
+ A28 "A28" 
+ A29_01 "A29_01" 
+ A29_02 "A29_02" 
+ A29_1 "A29_1" 
+ A22 "A22" 
+ A24 "A24" 
+ A26 "A26" 
+ A30 "A30" 
+ A31_top_1 "A31_top_1" 
+ A31_top_2 "A31_top_2" 
+ A31_top_3 "A31_top_3" 
+ A31_top_4 "A31_top_4" 
+ A31_top_5 "A31_top_5" 
+ A31_top_6 "A31_top_6" 
+ A31_top_7 "A31_top_7" 
+ A31_top_8 "A31_top_8" 
+ A31_top_9 "A31_top_9" 
+ A31_top_10 "A31_top_10" 
+ A31_top_11 "A31_top_11" 
+ A31_top_12 "A31_top_12" 
+ A31_top_13 "A31_top_13" 
+ A31_top_14 "A31_top_14" 
+ A31_top_15 "A31_top_15" 
+ A31_top_16 "A31_top_16" 
+ A32 "A32" 
+ A33_Coded_1 "A33_Coded_1" 
+ A33_Coded_2 "A33_Coded_2" 
+ A33_Coded_3 "A33_Coded_3" 
+ A34_top_1 "A34_top_1" 
+ A34_top_2 "A34_top_2" 
+ A34_top_3 "A34_top_3" 
+ A34_top_4 "A34_top_4" 
+ A34_top_5 "A34_top_5" 
+ A34_top_6 "A34_top_6" 
+ A34_top_7 "A34_top_7" 
+ A34_top_8 "A34_top_8" 
+ A34_top_9 "A34_top_9" 
+ A34_top_10 "A34_top_10" 
+ A35_top_1 "A35_top_1" 
+ A35_top_2 "A35_top_2" 
+ A35_top_3 "A35_top_3" 
+ A35_top_4 "A35_top_4" 
+ A35_top_5 "A35_top_5" 
+ A35_top_6 "A35_top_6" 
+ A36 "A36" 
+ A37_1 "A37_1" 
+ A37_2 "A37_2" 
+ A37_3 "A37_3" 
+ A38_top_1 "A38_top_1" 
+ A38_top_2 "A38_top_2" 
+ A38_top_3 "A38_top_3" 
+ A38_top_4 "A38_top_4" 
+ A38_top_5 "A38_top_5" 
+ A38_top_6 "A38_top_6" 
+ A38_top_7 "A38_top_7" 
+ A38_top_8 "A38_top_8" 
+ A38_top_9 "A38_top_9" 
+ A38_top_10 "A38_top_10" 
+ A38_top_11 "A38_top_11" 
+ A38_top_12 "A38_top_12" 
+ A38_top_13 "A38_top_13" 
+ A38_top_14 "A38_top_14" 
+ A39_top_1 "A39_top_1" 
+ A39_top_2 "A39_top_2" 
+ A39_top_3 "A39_top_3" 
+ A39_top_4 "A39_top_4" 
+ A39_top_5 "A39_top_5" 
+ A39_top_6 "A39_top_6" 
+ A39_top_7 "A39_top_7" 
+ A40 "A40" 
+ A41 "A41" 
+ A42 "A42" 
+ A43_top_1 "A43_top_1" 
+ A43_top_2 "A43_top_2" 
+ A43_top_3 "A43_top_3" 
+ A43_top_4 "A43_top_4" 
+ A43_top_5 "A43_top_5" 
+ A44 "A44" 
+ A45_O1 "A45_O1" 
+ A45_O2 "A45_O2" 
+ A45_O3 "A45_O3" 
+ A45_O4 "A45_O4" 
+ A45_O5 "A45_O5" 
+ A46_top_1 "A46_top_1" 
+ A46_top_12 "A46_top_12" 
+ A46_top_13 "A46_top_13" 
+ A47_top_1 "A47_top_1" 
+ A47_top_2 "A47_top_2" 
+ A47_top_3 "A47_top_3" 
+ A47_top_4 "A47_top_4" 
+ A47_top_5 "A47_top_5" 
+ A47_top_6 "A47_top_6" 
+ A47_top_7 "A47_top_7" 
+ A48 "A48" 
+ A49 "A49" 
+ A50 "A50" 
+ A51_1 "A51_1" 
+ A51_2 "A51_2" 
+ A51_3 "A51_3" 
+ A52 "A52" 
+ A53 "A53" 
+ A54 "A54" 
+ A56 "A56" 
+ A55 "A55" 
+ A57_1 "A57_1" 
+ A63 "A63" 
+ A58 "A58" 
+ A59 "A59" 
+ A60 "A60" 
+ A61 "A61" 
+ A62 "A62" 
+ weight "weight" 
+ zona "zona" 
+ gse "gse" 
+ edux "edux" 
+ ocux "ocux" 
+ Edad "Edad" 
+ Tamano_de_la_empresa "Tamano_de_la_empresa" 
+ A1x1_Coded_1 "A1x1_Coded_1" 
+ A1x2_Coded_1 "A1x2_Coded_1" 
+ A11_RECOD "A11_RECOD" 
+ A48A49 "A48A49" 
+ depre "depre" 
+ estrechez "estrechez" 
+ mujer "mujer" 
+ psicotrop "psicotrop" 
+ frec_acos21_1 "frec_acos21_1" 
+ frec_acos_ecotest "frec_acos_ecotest" 
+ testigo "testigo" 
+ k2_muyelevado "k2_muyelevado" 
+ k2_elevado "k2_elevado" 
+ k6_2 "k6_2" 
+ prec1 "prec1" 
+ prec2 "prec2" 
+ prec4 "prec4" 
+ prec5 "prec5" 
+ prec6 "prec6" 
+ antiguedad "antiguedad" 
+ politrab "politrab" 
+ desempleo "desempleo" 
+ trabdom "trabdom" 
+ atpub "atpub" 
+ Khab "Khab" 
+ Kcont "Kcont" 
+ latdec "latdec" 
+ latdec_dic "latdec_dic" 
+ democ "democ" 
+ prec8 "prec8" 
+ prec9 "prec9" 
+ turnos "turnos" 
+ estabilidad "estabilidad" 
+ prec7 "prec7" 
+ democ_dic "democ_dic" 
+ vul1 "vul1" 
+ vul2 "vul2" 
+ vul3 "vul3" 
+ vul4 "vul4" 
+ vul5 "vul5" 
+ vul6 "vul6" 
+ vul7 "vul7" 
+ vul "vul" 
+ auditc "auditc" 
+ prec3r "prec3r" 
+ aposoc1 "aposoc1" 
+ aposoc2 "aposoc2" 
+ aposoc3 "aposoc3" 
+ aposoc4 "aposoc4" 
+ aposoc5 "aposoc5" 
+ aposoc6 "aposoc6" 
+ aposoc_tot "aposoc_tot" 
+ tenpsi "tenpsi" 
+ iso "iso" 
+ salgen "salgen" 
+ climasex "climasex" 
+ culorg1 "culorg1" 
+ culorg2 "culorg2" 
+ culorg3 "culorg3" 
+ cultura "cultura" 
+ LID_DES1 "LID_DES1" 
+ LID_DES2 "LID_DES2" 
+ LID_DES3 "LID_DES3" 
+ LID_DES4 "LID_DES4" 
+ LID_DES5 "LID_DES5" 
+ LID_DES6 "LID_DES6" 
+ LID_DES7 "LID_DES7" 
+ LID_DES8 "LID_DES8" 
+ LID_DES9 "LID_DES9" 
+ LID_DES10 "LID_DES10" 
+ LID_DES11 "LID_DES11" 
+ LID_DES12 "LID_DES12" 
+ LID_DES13 "LID_DES13" 
+ LID_DES14 "LID_DES14" 
+ LID_DES1_rec "LID_DES1_rec" 
+ LID_DES2_rec "LID_DES2_rec" 
+ LID_DES3_rec "LID_DES3_rec" 
+ LID_DES4_rec "LID_DES4_rec" 
+ LID_DES5_rec "LID_DES5_rec" 
+ LID_DES6_rec "LID_DES6_rec" 
+ LID_DES7_rec "LID_DES7_rec" 
+ LID_DES8_rec "LID_DES8_rec" 
+ LID_DES9_rec "LID_DES9_rec" 
+ LID_DES10_rec "LID_DES10_rec" 
+ LID_DES11_rec "LID_DES11_rec" 
+ LID_DES12_rec "LID_DES12_rec" 
+ LID_DES13_rec "LID_DES13_rec" 
+ LID_DES14_rec "LID_DES14_rec" 
+ LF "LF" 
+ LA "LA" 
+ LC "LC" 
+ NAQ1 "NAQ1" 
+ NAQ2 "NAQ2" 
+ NAQ3 "NAQ3" 
+ NAQ4 "NAQ4" 
+ NAQ5 "NAQ5" 
+ NAQ6 "NAQ6" 
+ NAQ7 "NAQ7" 
+ NAQ8 "NAQ8" 
+ NAQ9 "NAQ9" 
+ NAQ10 "NAQ10" 
+ NAQ11 "NAQ11" 
+ NAQ12 "NAQ12" 
+ NAQ13 "NAQ13" 
+ NAQ14 "NAQ14" 
+ NAQ15 "NAQ15" 
+ NAQ16 "NAQ16" 
+ NAQ17 "NAQ17" 
+ NAQ18 "NAQ18" 
+ NAQ19 "NAQ19" 
+ NAQ20 "NAQ20" 
+ NAQ21 "NAQ21" 
+ NAQ22 "NAQ22" 
+ NAQ1_rec "NAQ1_rec" 
+ NAQ2_rec "NAQ2_rec" 
+ NAQ3_rec "NAQ3_rec" 
+ NAQ4_rec "NAQ4_rec" 
+ NAQ5_rec "NAQ5_rec" 
+ NAQ6_rec "NAQ6_rec" 
+ NAQ7_rec "NAQ7_rec" 
+ NAQ8_rec "NAQ8_rec" 
+ NAQ9_rec "NAQ9_rec" 
+ NAQ10_rec "NAQ10_rec" 
+ NAQ11_rec "NAQ11_rec" 
+ NAQ12_rec "NAQ12_rec" 
+ NAQ13_rec "NAQ13_rec" 
+ NAQ14_rec "NAQ14_rec" 
+ NAQ15_rec "NAQ15_rec" 
+ NAQ16_rec "NAQ16_rec" 
+ NAQ17_rec "NAQ17_rec" 
+ NAQ18_rec "NAQ18_rec" 
+ NAQ19_rec "NAQ19_rec" 
+ NAQ20_rec "NAQ20_rec" 
+ NAQ21_rec "NAQ21_rec" 
+ NAQ22_rec "NAQ22_rec" 
+ NAQ_Dic "NAQ_Dic" 
+ NAQ_Leyman "NAQ_Leyman" 
+ NAQ_MyE "NAQ_MyE" 
+ NAQ_A "NAQ_A" 
+ mas_horas "mas_horas" 
+ menos45 "menos45" 
+ quieren_mas "quieren_mas" 
+ prec3 "prec3" 
+ prec "prec" 
+ precr "precr" 
+ precr1 "precr1" 
+ tamano "tamano" 
+ r1 "r1" 
+ r2 "r2" 
+ r3 "r3" 
+ r4 "r4" 
+ r5 "r5" 
+ r6 "r6" 
+ r7 "r7" 
+ e1 "e1" 
+ e2 "e2" 
+ e3 "e3" 
+ esfuerzo "esfuerzo" 
+ recompensas "recompensas" 
+ desbalance "desbalance" 
+ desbalance_dic "desbalance_dic" 
+ LA_rec "LA_rec" 
+ LF_rec "LF_rec" 
+ LC_rec "LC_rec" 
+ LF_Leyman "LF_Leyman" 
+ LA_Leyman "LA_Leyman" 
+ LC_Leyman "LC_Leyman" 
+ NAQ_sum "NAQ_sum" 
+ NAQ_sum_cuartil "NAQ_sum_cuartil" 
+ k6 "k6" 
+ s1 "s1" 
+ s2 "s2" 
+ s3 "s3" 
+ s4 "s4" 
+ s5 "s5" 
+ satis "satis" 
+ satis_terc "satis_terc" 
+ ocuprev "ocuprev" 
+ NAQ_R_AF_rec "NAQ_R_AF_rec" 
+ NAQ_R_AP_rec "NAQ_R_AP_rec" 
+ NAQ_R_RT_rec "NAQ_R_RT_rec" 
+ NAQ_AF_Leyman "NAQ_AF_Leyman" 
+ NAQ_AP_Leyman "NAQ_AP_Leyman" 
+ NAQ_RT_Leyman "NAQ_RT_Leyman" 
+ NAQ_AF_MyE "NAQ_AF_MyE" 
+ NAQ_AP_MyE "NAQ_AP_MyE" 
+ NAQ_RT_MyE "NAQ_RT_MyE" 
+ NAQ_AF_A "NAQ_AF_A" 
+ NAQ_AP_A "NAQ_AP_A" 
+ NAQ_RT_A "NAQ_RT_A" 
+ satlab_rec "satlab_rec" 
+ ARAUCARIA_ACOSO "ARAUCARIA_ACOSO" 
+ ACOSO_AUTO "ACOSO_AUTO" 
+ ACOSO_AUTO_REC "ACOSO_AUTO_REC" 
+ NAQ_sum_ROC "NAQ_sum_ROC" 
+ NAQ_sum_ROC2 "NAQ_sum_ROC2" 
+ NAQ_sum_ROC_3cat "NAQ_sum_ROC_3cat" 
+ culorg1_ext "culorg1_ext" 
+ culorg3_ext "culorg3_ext" 
+ culorg2_ext "culorg2_ext" 
+ hombre "hombre" 
+ autonaq "autonaq" 
+ _est_culorg_ext_c1 "_est_culorg_ext_c1" 
+ NAQ1_clus "NAQ1_clus" 
+ NAQ2_clus "NAQ2_clus" 
+ NAQ3_clus "NAQ3_clus" 
+ NAQ4_clus "NAQ4_clus" 
+ NAQ5_clus "NAQ5_clus" 
+ NAQ6_clus "NAQ6_clus" 
+ NAQ7_clus "NAQ7_clus" 
+ NAQ8_clus "NAQ8_clus" 
+ NAQ9_clus "NAQ9_clus" 
+ NAQ10_clus "NAQ10_clus" 
+ NAQ11_clus "NAQ11_clus" 
+ NAQ12_clus "NAQ12_clus" 
+ NAQ13_clus "NAQ13_clus" 
+ NAQ14_clus "NAQ14_clus" 
+ NAQ15_clus "NAQ15_clus" 
+ NAQ16_clus "NAQ16_clus" 
+ NAQ17_clus "NAQ17_clus" 
+ NAQ18_clus "NAQ18_clus" 
+ NAQ19_clus "NAQ19_clus" 
+ NAQ20_clus "NAQ20_clus" 
+ NAQ21_clus "NAQ21_clus" 
+ NAQ22_clus "NAQ22_clus" 
+ LID_DES1_clus "LID_DES1_clus" 
+ LID_DES2_clus "LID_DES2_clus" 
+ LID_DES3_clus "LID_DES3_clus" 
+ LID_DES4_clus "LID_DES4_clus" 
+ LID_DES5_clus "LID_DES5_clus" 
+ LID_DES6_clus "LID_DES6_clus" 
+ LID_DES7_clus "LID_DES7_clus" 
+ LID_DES8_clus "LID_DES8_clus" 
+ LID_DES9_clus "LID_DES9_clus" 
+ LID_DES10_clus "LID_DES10_clus" 
+ LID_DES11_clus "LID_DES11_clus" 
+ LID_DES12_clus "LID_DES12_clus" 
+ LID_DES13_clus "LID_DES13_clus" 
+ LID_DES14_clus "LID_DES14_clus" 
+ NAQ23 "NAQ23" 
+ NAQ24 "NAQ24" 
+ NAQ23_rec "NAQ23_rec" 
+ NAQ24_rec "NAQ24_rec" 
+ NAQ_R_incivismo_rec "NAQ_R_incivismo_rec" 
+ NAQ_Inciv_Leyman "NAQ_Inciv_Leyman" 
+ clus2_2clas "clus2_2clas" 
+ _est_b1 "_est_b1" 
+ prev3 "prev3" 
+ superv "superv" 
+ ocuprev_rec "ocuprev_rec" 
+ SECT_PRIV "SECT_PRIV" 
+ cont_trab "cont_trab" 
+ org_sind "org_sind" 
+ gse_ac3 "gse_ac3" 
+ jef_hogar "jef_hogar" 
+ agr_fisica "agr_fisica" 
+ acos_sex "acos_sex" 
+ bajarecompensa "bajarecompensa" 
+ altoesfuerzo "altoesfuerzo" 
+ _est_culorg_ext_c2 "_est_culorg_ext_c2" 
+ _est_culorg_ext_c3 "_est_culorg_ext_c3" 
+ _est_culorg_ext_c4 "_est_culorg_ext_c4" 
+ _est_culorg_ext_c5 "_est_culorg_ext_c5" 
+ _est_culorg_ext_c6 "_est_culorg_ext_c6" 
+ _est_culorg_ext_c7 "_est_culorg_ext_c7" 
+ _est_culorg_ext_c8 "_est_culorg_ext_c8" 
+ _est_culorg_ext_c9 "_est_culorg_ext_c9" 
+ _est_culorg_ext_c10 "_est_culorg_ext_c10" 
+ _est_culorg_ext_c11 "_est_culorg_ext_c11" 
+ _est_culorg_ext_c12 "_est_culorg_ext_c12" 
+ _est_culorg_ext_c13 "_est_culorg_ext_c13" 
+ _est_culorg_ext_c14 "_est_culorg_ext_c14" 
+ _est_culorg_ext_c15 "_est_culorg_ext_c15" 
+ _est_culorg_ext_c6_FINAL "_est_culorg_ext_c6_FINAL" 
+ _est_culorg_ext_c6_FINAL_est "_est_culorg_ext_c6_FINAL_est" 
+ expclass_CULORG_1 "expclass_CULORG_1" 
+ expclass_CULORG_2 "expclass_CULORG_2" 
+ expclass_CULORG_3 "expclass_CULORG_3" 
+ expclass_CULORG_4 "expclass_CULORG_4" 
+ expclass_CULORG_5 "expclass_CULORG_5" 
+ expclass_CULORG_6 "expclass_CULORG_6" 
+ _est_culorg_c2 "_est_culorg_c2" 
+ _est_culorg_c3 "_est_culorg_c3" 
+ _est_culorg_c4 "_est_culorg_c4" 
+ _est_culorg_c5 "_est_culorg_c5" 
+ _est_culorg_c6 "_est_culorg_c6" 
+ _est_culorg_c7 "_est_culorg_c7" 
+ _est_culorg_c8 "_est_culorg_c8" 
+ proc_res "proc_res" 
+ bienst_tarea "bienst_tarea" 
+ laxo_estr "laxo_estr" 
+ cluster "cluster" 
+ cluster_rec "cluster_rec" 
+ cluster_rec2 "cluster_rec2" 
+ _est_logit "_est_logit" 
+ _est_melogit "_est_melogit" 
+ _est_CIM "_est_CIM" 
+ expclass_CULORG_final_1 "expclass_CULORG_final_1" 
+ expclass_CULORG_final_2 "expclass_CULORG_final_2" 
+ expclass_CULORG_final_3 "expclass_CULORG_final_3" 
+ expclass_CULORG_final_4 "expclass_CULORG_final_4" 
+ expclass_CULORG_final_5 "expclass_CULORG_final_5" 
+ expclass_CULORG_final_6 "expclass_CULORG_final_6" 
+ classprior1 "classprior1" 
+ classprior2 "classprior2" 
+ classprior3 "classprior3" 
+ classprior4 "classprior4" 
+ classprior5 "classprior5" 
+ classprior6 "classprior6" 
+ classpost1 "classpost1" 
+ classpost2 "classpost2" 
+ classpost3 "classpost3" 
+ classpost4 "classpost4" 
+ classpost5 "classpost5" 
+ classpost6 "classpost6" 
+ rec_expclass_CULORG_final_1 "rec_expclass_CULORG_final_1" 
+ rec_expclass_CULORG_final_2 "rec_expclass_CULORG_final_2" 
+ rec_expclass_CULORG_final_3 "rec_expclass_CULORG_final_3" 
+ rec_expclass_CULORG_final_4 "rec_expclass_CULORG_final_4" 
+ rec_expclass_CULORG_final_5 "rec_expclass_CULORG_final_5" 
+ rec_expclass_CULORG_final_6 "rec_expclass_CULORG_final_6" 
+ cluster_final "cluster_final" 
+ cluster_rec_final "cluster_rec_final" 
+ cluster_rec2_final "cluster_rec2_final" 
+ .
+VARIABLE LEVEL SbjNum, N_PERSONA, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12_O1, 
+ A12_O2, A12_O3, A12_O4, A12_O5, A12_O6, A12_Otra_1, A12_Otra_2, A13, 
+ A14, A14_1, A15, A15_1, A16, A16_1, A17, A18_top_1, A18_top_2, 
+ A18_top_3, A18_top_4, A18_top_5, A18_top_6, A18_top_7, A18_top_8, 
+ A18_top_9, A18_top_10, A19_top_1, A19_top_2, A19_top_3, A19_top_4, 
+ A20_1_Top_1, A20_1_Top_2, A20_1_Top_3, A20_1_Top_4, A20_1_Top_5, 
+ A20_1_Top_6, A20_1_Top_7, A20_1_Top_8, A20_1_Top_9, A20_1_Top_10, 
+ A20_1_Top_11, A20_1_Top_12, A20_2_Top_13, A20_2_Top_14, A20_2_Top_15, 
+ A20_2_Top_16, A20_2_Top_17, A20_2_Top_18, A20_2_Top_19, A20_2_Top_20, 
+ A20_2_Top_21, A20_2_Top_22, A20_2_Top_23, A20_2_Top_24, A21, A21_1, 
+ A23, A25, A27, A28, A29_01, A29_02, A29_1, A22, A24, A26, A30, 
+ A31_top_1, A31_top_2, A31_top_3, A31_top_4, A31_top_5, A31_top_6, 
+ A31_top_7, A31_top_8, A31_top_9, A31_top_10, A31_top_11, A31_top_12, 
+ A31_top_13, A31_top_14, A31_top_15, A31_top_16, A32, A33_Coded_1, 
+ A33_Coded_2, A33_Coded_3, A34_top_1, A34_top_2, A34_top_3, A34_top_4, 
+ A34_top_5, A34_top_6, A34_top_7, A34_top_8, A34_top_9, A34_top_10, 
+ A35_top_1, A35_top_2, A35_top_3, A35_top_4, A35_top_5, A35_top_6, 
+ A36, A37_1, A37_2, A37_3, A38_top_1, A38_top_2, A38_top_3, A38_top_4, 
+ A38_top_5, A38_top_6, A38_top_7, A38_top_8, A38_top_9, A38_top_10, 
+ A38_top_11, A38_top_12, A38_top_13, A38_top_14, A39_top_1, A39_top_2, 
+ A39_top_3, A39_top_4, A39_top_5, A39_top_6, A39_top_7, A40, A41, A42, 
+ A43_top_1, A43_top_2, A43_top_3, A43_top_4, A43_top_5, A44, A45_O1, 
+ A45_O2, A45_O3, A45_O4, A45_O5, A46_top_1, A46_top_12, A46_top_13, 
+ A47_top_1, A47_top_2, A47_top_3, A47_top_4, A47_top_5, A47_top_6, 
+ A47_top_7, A48, A49, A50, A51_1, A51_2, A51_3, A52, A53, A54, A56, 
+ A55, A57_1, A63, A58, A59, A60, A61, A62, weight, zona, gse, edux, 
+ ocux, Edad, Tamano_de_la_empresa, A1x1_Coded_1, A1x2_Coded_1, 
+ A11_RECOD, A48A49, depre, estrechez, mujer, psicotrop, frec_acos21_1, 
+ frec_acos_ecotest, testigo, k2_muyelevado, k2_elevado, k6_2, prec1, 
+ prec2, prec4, prec5, prec6, antiguedad, politrab, desempleo, trabdom, 
+ atpub, Khab, Kcont, latdec, latdec_dic, democ, prec8, prec9, turnos, 
+ estabilidad, prec7, democ_dic, vul1, vul2, vul3, vul4, vul5, vul6, 
+ vul7, vul, auditc, prec3r, aposoc1, aposoc2, aposoc3, aposoc4, 
+ aposoc5, aposoc6, aposoc_tot, tenpsi, iso, salgen, climasex, culorg1, 
+ culorg2, culorg3, cultura, LID_DES1, LID_DES2, LID_DES3, LID_DES4, 
+ LID_DES5, LID_DES6, LID_DES7, LID_DES8, LID_DES9, LID_DES10, 
+ LID_DES11, LID_DES12, LID_DES13, LID_DES14, LID_DES1_rec, 
+ LID_DES2_rec, LID_DES3_rec, LID_DES4_rec, LID_DES5_rec, LID_DES6_rec, 
+ LID_DES7_rec, LID_DES8_rec, LID_DES9_rec, LID_DES10_rec, 
+ LID_DES11_rec, LID_DES12_rec, LID_DES13_rec, LID_DES14_rec, LF, LA, 
+ LC, NAQ1, NAQ2, NAQ3, NAQ4, NAQ5, NAQ6, NAQ7, NAQ8, NAQ9, NAQ10, 
+ NAQ11, NAQ12, NAQ13, NAQ14, NAQ15, NAQ16, NAQ17, NAQ18, NAQ19, NAQ20, 
+ NAQ21, NAQ22, NAQ1_rec, NAQ2_rec, NAQ3_rec, NAQ4_rec, NAQ5_rec, 
+ NAQ6_rec, NAQ7_rec, NAQ8_rec, NAQ9_rec, NAQ10_rec, NAQ11_rec, 
+ NAQ12_rec, NAQ13_rec, NAQ14_rec, NAQ15_rec, NAQ16_rec, NAQ17_rec, 
+ NAQ18_rec, NAQ19_rec, NAQ20_rec, NAQ21_rec, NAQ22_rec, NAQ_Dic, 
+ NAQ_Leyman, NAQ_MyE, NAQ_A, mas_horas, menos45, quieren_mas, prec3, 
+ prec, precr, precr1, tamano, r1, r2, r3, r4, r5, r6, r7, e1, e2, e3, 
+ esfuerzo, recompensas, desbalance, desbalance_dic, LA_rec, LF_rec, 
+ LC_rec, LF_Leyman, LA_Leyman, LC_Leyman, NAQ_sum, NAQ_sum_cuartil, 
+ k6, s1, s2, s3, s4, s5, satis, satis_terc, ocuprev, NAQ_R_AF_rec, 
+ NAQ_R_AP_rec, NAQ_R_RT_rec, NAQ_AF_Leyman, NAQ_AP_Leyman, 
+ NAQ_RT_Leyman, NAQ_AF_MyE, NAQ_AP_MyE, NAQ_RT_MyE, NAQ_AF_A, 
+ NAQ_AP_A, NAQ_RT_A, satlab_rec, ARAUCARIA_ACOSO, ACOSO_AUTO, 
+ ACOSO_AUTO_REC, NAQ_sum_ROC, NAQ_sum_ROC2, NAQ_sum_ROC_3cat, 
+ culorg1_ext, culorg3_ext, culorg2_ext, hombre, autonaq, 
+ _est_culorg_ext_c1, NAQ1_clus, NAQ2_clus, NAQ3_clus, NAQ4_clus, 
+ NAQ5_clus, NAQ6_clus, NAQ7_clus, NAQ8_clus, NAQ9_clus, NAQ10_clus, 
+ NAQ11_clus, NAQ12_clus, NAQ13_clus, NAQ14_clus, NAQ15_clus, 
+ NAQ16_clus, NAQ17_clus, NAQ18_clus, NAQ19_clus, NAQ20_clus, 
+ NAQ21_clus, NAQ22_clus, LID_DES1_clus, LID_DES2_clus, LID_DES3_clus, 
+ LID_DES4_clus, LID_DES5_clus, LID_DES6_clus, LID_DES7_clus, 
+ LID_DES8_clus, LID_DES9_clus, LID_DES10_clus, LID_DES11_clus, 
+ LID_DES12_clus, LID_DES13_clus, LID_DES14_clus, NAQ23, NAQ24, 
+ NAQ23_rec, NAQ24_rec, NAQ_R_incivismo_rec, NAQ_Inciv_Leyman, 
+ clus2_2clas, _est_b1, prev3, superv, ocuprev_rec, SECT_PRIV, 
+ cont_trab, org_sind, gse_ac3, jef_hogar, agr_fisica, acos_sex, 
+ bajarecompensa, altoesfuerzo, _est_culorg_ext_c2, _est_culorg_ext_c3, 
+ _est_culorg_ext_c4, _est_culorg_ext_c5, _est_culorg_ext_c6, 
+ _est_culorg_ext_c7, _est_culorg_ext_c8, _est_culorg_ext_c9, 
+ _est_culorg_ext_c10, _est_culorg_ext_c11, _est_culorg_ext_c12, 
+ _est_culorg_ext_c13, _est_culorg_ext_c14, _est_culorg_ext_c15, 
+ _est_culorg_ext_c6_FINAL, _est_culorg_ext_c6_FINAL_est, 
+ expclass_CULORG_1, expclass_CULORG_2, expclass_CULORG_3, 
+ expclass_CULORG_4, expclass_CULORG_5, expclass_CULORG_6, 
+ _est_culorg_c2, _est_culorg_c3, _est_culorg_c4, _est_culorg_c5, 
+ _est_culorg_c6, _est_culorg_c7, _est_culorg_c8, proc_res, 
+ bienst_tarea, laxo_estr, cluster_rec, cluster_rec2, _est_logit, 
+ _est_melogit, _est_CIM, expclass_CULORG_final_1, 
+ expclass_CULORG_final_2, expclass_CULORG_final_3, 
+ expclass_CULORG_final_4, expclass_CULORG_final_5, 
+ expclass_CULORG_final_6, classprior1, classprior2, classprior3, 
+ classprior4, classprior5, classprior6, classpost1, classpost2, 
+ classpost3, classpost4, classpost5, classpost6, 
+ rec_expclass_CULORG_final_1, rec_expclass_CULORG_final_2, 
+ rec_expclass_CULORG_final_3, rec_expclass_CULORG_final_4, 
+ rec_expclass_CULORG_final_5, rec_expclass_CULORG_final_6, 
+ cluster_rec_final, cluster_rec2_final 
+ (scale).
+
+EXECUTE.

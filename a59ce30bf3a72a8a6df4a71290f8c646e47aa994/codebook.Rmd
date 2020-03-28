@@ -69,28 +69,34 @@ A continuación podrá encontrar información resumida sobre las variables relat
 <br>
 
 ```{r codebook1}
-library("rio")  
-BD_2020<- rio::import("G:/Mi unidad/DOCUMENTOS/6.TESIS 2018/Codebook_FONDECYT_1170239/BD_2020.dta", format="dta")
+library(readr)
+#BD_2020_input <- read_csv("BD_2020_input.csv")
+BD_2020_input <- readr::read_csv("BD_2020.csv")
 
 #estandarizamos los nombres de columnas
 #copiar_nombres(data.frame(original = colnames(BD_2020), clean_names = colnames(janitor::clean_names(BD_2020))))
-BD_2020<-janitor::clean_names(BD_2020)
+library(magrittr)
+library(dplyr)
+cols <- c('n_persona','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12_o1','a12_o2','a12_o3','a12_o4','a12_o5','a12_o6','a12_otra_1','a12_otra_2','a13','a14','a15','a16','a17','a18_top_1','a18_top_2','a18_top_3','a18_top_4','a18_top_5','a18_top_6','a18_top_7','a18_top_8','a18_top_9','a18_top_10','a19_top_1','a19_top_2','a19_top_3','a19_top_4','a20_1_top_1','a20_1_top_2','a20_1_top_3','a20_1_top_4','a20_1_top_5','a20_1_top_6','a20_1_top_7','a20_1_top_8','a20_1_top_9','a20_1_top_10','a20_1_top_11','a20_1_top_12','a20_2_top_13','a20_2_top_14','a20_2_top_15','a20_2_top_16','a20_2_top_17','a20_2_top_18','a20_2_top_19','a20_2_top_20','a20_2_top_21','a20_2_top_22','a20_2_top_23','a20_2_top_24','a21','a21_1','a23','a25','a27','a28','a29_01','a29_02','a29_1','a22','a24','a26','a30','a31_top_1','a31_top_2','a31_top_3','a31_top_4','a31_top_5','a31_top_6','a31_top_7','a31_top_8','a31_top_9','a31_top_10','a31_top_11','a31_top_12','a31_top_13','a31_top_14','a31_top_15','a31_top_16','a32','a33_coded_1','a33_coded_2','a33_coded_3','a34_top_1','a34_top_2','a34_top_3','a34_top_4','a34_top_5','a34_top_6','a34_top_7','a34_top_8','a34_top_9','a34_top_10','a35_top_1','a35_top_2','a35_top_3','a35_top_4','a35_top_5','a35_top_6','a36','a37_1','a37_2','a37_3','a38_top_1','a38_top_2','a38_top_3','a38_top_4','a38_top_5','a38_top_6','a38_top_7','a38_top_8','a38_top_9','a38_top_10','a38_top_11','a38_top_12','a38_top_13','a38_top_14','a39_top_1','a39_top_2','a39_top_3','a39_top_4','a39_top_5','a39_top_6','a39_top_7','a40','a41','a42','a43_top_1','a43_top_2','a43_top_3','a43_top_4','a43_top_5','a44','a45_o1','a45_o2','a45_o3','a45_o4','a45_o5','a46_top_1','a46_top_12','a46_top_13','a47_top_1','a47_top_2','a47_top_3','a47_top_4','a47_top_5','a47_top_6','a47_top_7','a48','a49','a50','a51_1','a51_2','a51_3','a52','a54','a56','a55','a57_1','a63','a58','a59','a60','a61','a62','zona','gse','edux','ocux','edad','tamano_de_la_empresa','a1x1_coded_1','a1x2_coded_1','a11_recod','a48a49','depre','estrechez','mujer','psicotrop','frec_acos21_1','frec_acos_ecotest','testigo','k2_muyelevado','k2_elevado','prec1','prec2','prec4','prec5','prec6','antiguedad','politrab','desempleo','trabdom','atpub','latdec_dic','prec8','prec9','estabilidad','prec7','democ_dic','vul1','vul2','vul3','vul4','vul5','vul6','vul7','vul','auditc','prec3r','aposoc1','aposoc2','aposoc3','aposoc4','aposoc5','aposoc6','aposoc_tot','tenpsi','iso','salgen','climasex','culorg1','culorg2','culorg3','cultura','lid_des1','lid_des2','lid_des3','lid_des4','lid_des5','lid_des6','lid_des7','lid_des8','lid_des9','lid_des10','lid_des11','lid_des12','lid_des13','lid_des14','lid_des1_rec','lid_des2_rec','lid_des3_rec','lid_des4_rec','lid_des5_rec','lid_des6_rec','lid_des7_rec','lid_des8_rec','lid_des9_rec','lid_des10_rec','lid_des11_rec','lid_des12_rec','lid_des13_rec','lid_des14_rec','naq1','naq2','naq3','naq4','naq5','naq6','naq7','naq8','naq9','naq10','naq11','naq12','naq13','naq14','naq15','naq16','naq17','naq18','naq19','naq20','naq21','naq22','naq1_rec','naq2_rec','naq3_rec','naq4_rec','naq5_rec','naq6_rec','naq7_rec','naq8_rec','naq9_rec','naq10_rec','naq11_rec','naq12_rec','naq13_rec','naq14_rec','naq15_rec','naq16_rec','naq17_rec','naq18_rec','naq19_rec','naq20_rec','naq21_rec','naq22_rec','naq_leyman','naq_my_e','naq_a','mas_horas','menos45','quieren_mas','prec3','prec','precr','precr1','tamano','r1','r2','r3','r4','r5','r6','r7','e1','e2','e3','la_rec','lf_rec','lc_rec','lf_leyman','la_leyman','lc_leyman','k6','s1','s2','s3','s4','s5','ocuprev','naq_r_af_rec','naq_r_ap_rec','naq_r_rt_rec','naq_af_leyman','naq_ap_leyman','naq_rt_leyman','naq_af_my_e','naq_ap_my_e','naq_rt_my_e','naq_af_a','naq_ap_a','naq_rt_a','satlab_rec','araucaria_acoso','acoso_auto','acoso_auto_rec','naq_sum_roc','naq_sum_roc_3cat','hombre','autonaq','naq23','naq24','naq23_rec','naq24_rec','naq_r_incivismo_rec','naq_inciv_leyman','prev3','superv','ocuprev_rec','sect_priv','cont_trab','org_sind','gse_ac3','jef_hogar','agr_fisica','acos_sex','lf_rec_logit','la_rec_logit','lc_rec_logit','naq_dic_logit','lid_des_sum_cuartil','naq_sum_cuartil','expclass_culorg_1','expclass_culorg_2','expclass_culorg_3','expclass_culorg_4','expclass_culorg_5','expclass_culorg_6','cluster_rec2','expclass_culorg_alt_1','expclass_culorg_alt_2','expclass_culorg_alt_3','expclass_culorg_alt_4','expclass_culorg_alt_5','expclass_culorg_alt_6','rec_expclass_culorg_alt_1','rec_expclass_culorg_alt_2','rec_expclass_culorg_alt_3','rec_expclass_culorg_alt_4','rec_expclass_culorg_alt_5','rec_expclass_culorg_alt_6','rec_expclass_culorg_1','rec_expclass_culorg_2','rec_expclass_culorg_3','rec_expclass_culorg_4','rec_expclass_culorg_5','rec_expclass_culorg_6','lid_des_dic','lid_des_dic_logit','bajarecompensa','altoesfuerzo','desbalance_dic','culorg1_ext','culorg2_ext','culorg3_ext','proc_res','bienst_tarea','laxo_estr','lid_des_my_e','cluster_rec2_binary','cluster_rec2_alt','naq_sum_roc3','educacion277','ocuprev_xi_am277','ing_hog_xi_am277','vul_hm','lf_leyman_hm','la_leyman_hm','lc_leyman_hm','depre_hm','psicotrop_hm','k2_elevado_hm','climasex_hm','jerarquia_acoso','jerarquia_acoso2','lid_des_leyman','acos_psico_freq','carga_dom','educacion_media','cont_def','ocuprev_nocalif','santiago','valpo','concep','expclass_naq_alt_1','expclass_naq_alt_2','expclass_naq_alt_3','expclass_naq_alt_4','expclass_naq_alt_5','expclass_naq_alt_6','rec_expclass_naq_alt_1','rec_expclass_naq_alt_2','rec_expclass_naq_alt_3','rec_expclass_naq_alt_4','rec_expclass_naq_alt_5','rec_expclass_naq_alt_6','cluster_rec2_naq_alt','turnos')
+cols2 <- c("sbj_num","cluster_rec","cluster_alt","cluster_rec_alt","cluster_naq_alt","cluster_naq_alt_rec")
+BD_2020_input<- BD_2020_input %>%
+                janitor::clean_names() %>%              
+                dplyr::mutate_each_(funs(as.factor(.)),cols)%>%
+                dplyr::mutate_each_(funs(as.numeric(.)),cols2) %>%
+                dplyr::mutate_each_(funs(as.character(.)),cols2) 
 
-rio::export(BD_2020,"BD_2020_exp.sav")
-rio::export(BD_2020,"BD_2020_exp.dta")
-
-write.csv(BD_2020_csv,"BD_2020.csv", row.names = FALSE)
+#_#_#_#_#_#_#_#_#_#_#_#_#
 #procesed file
-BD_2020_csv_proc <- readr::read_csv("BD_2020.csv")
+#BD_2020_input <- readr::read_csv("BD_2020.csv")
+#_#_#_#_#_#_#_#_#_#_#_#_#
 
 #Ahora defino el metaarchivo asociado
-  metadata(BD_2020_csv_proc)$name <- "FONDECYT_1170239 A Marzo 2020"
-  metadata(BD_2020_csv_proc)$description <- "Prevalencia, formas de manifestacion y factores facilitadores de la violencia laboral, y sus efectos en la salud mental en poblacion asalariada en Chile atendiendo desiqualdades sociales y de genero. Inv. Responsable Elisa Ansoleaga"
-  metadata(BD_2020_csv_proc)$creator <- "Andres Gonzalez Santa Cruz"
-  metadata(BD_2020_csv_proc)$datePublished <- "2020-03-24"
+  metadata(BD_2020_input)$name <- "FONDECYT_1170239 A Marzo 2020"
+  metadata(BD_2020_input)$description <- "Prevalencia, formas de manifestacion y factores facilitadores de la violencia laboral, y sus efectos en la salud mental en poblacion asalariada en Chile atendiendo desiqualdades sociales y de genero. Inv. Responsable Elisa Ansoleaga"
+  metadata(BD_2020_input)$creator <- "Andres Gonzalez Santa Cruz"
+  metadata(BD_2020_input)$datePublished <- "2020-03-24"
 #revisar por la presencia de eso: ^^^
-codebook::var_label(BD_2020_csv_proc) <- list(
-sbj_num= 'SbjNum',
+codebook::var_label(BD_2020_input) <- list(sbj_num= 'SbjNum',
 n_persona= 'A. ¿Cuántas personas de 20 o más años que trabajan en forma dependiente o asalariada, viven actualmente en esta vivienda?',
 a2= 'En la empresa u organización donde usted trabaja ¿Supervisa a empleados/as?',
 a3= '¿A qué actividad económica se dedica la org. en la que trabaja?',
@@ -521,7 +527,7 @@ rec_expclass_culorg_alt_3= 'Clase Esperada (sin 0), Clasificación por Cluster, 
 rec_expclass_culorg_alt_4= 'Clase Esperada (sin 0), Clasificación por Cluster, Ítemes de Cultura Alternativa, clase 4 (6 clases) (JPT)',
 rec_expclass_culorg_alt_5= 'Clase Esperada (sin 0), Clasificación por Cluster, Ítemes de Cultura Alternativa, clase 5 (6 clases) (JPT)',
 rec_expclass_culorg_alt_6= 'Clase Esperada (sin 0), Clasificación por Cluster, Ítemes de Cultura Alternativa, clase 6 (6 clases) (JPT)',
-#N/D,
+cluster_alt= 'Conjunto concatenado de clases definitivo (contiene a los que no pertenecen) (JPT)',
 cluster_rec_alt= 'Conjunto concatenado de clases definitivo (contiene a los que no pertenecen) (JPT)',
 rec_expclass_culorg_1= 'Clase Esperada (sin 0), Clasificación por Cluster, Ítemes de Cultura, clase 1 (6 clases) (JPT)',
 rec_expclass_culorg_2= 'Clase Esperada (sin 0), Clasificación por Cluster, Ítemes de Cultura, clase 2 (6 clases) (JPT)',
@@ -600,8 +606,34 @@ rec_expclass_naq_alt_6= 'Clase Esperada (sin 0), Clasificación por Cluster, Ít
 cluster_naq_alt= 'Conjunto concatenado de clases definitivo (contiene a los que no pertenecen) NAQ (ags)',
 cluster_naq_alt_rec= 'Clasificación preliminar (contiene a los que no pertenecen) NAQ (ags)',
 cluster_rec2_naq_alt= 'Clasificación por Cluster, Ítemes de NAQ (6 clases)',
-turnos= 'Sistema de turnos'
-)
-codebook(BD_2020_csv_proc)
+turnos= 'Sistema de turnos')
+val_labels(BD_2020_input$educacion277) <- c("Sin Educacion o Basica" = 1, 
+                                     "Media o Tecnica Incomp" = 2,
+                                     "Tecnica Comp o Univ Incomp" = 3,
+                                     "Universitaria Comp o Postgr" = 4)
+val_labels(BD_2020_input$ocuprev_xi_am277) <- c("Jef Intermedias" = 1, 
+                                     "Prof y Tecnicos" = 2,
+                                     "Emp Oficina y Vendedores" = 3,
+                                     "Op, conductores y calif" = 4,
+                                     "No calificados" = 5)
+val_labels(BD_2020_input$ing_hog_xi_am277) <- c("Hasta 540.000 pesos" = 1,
+                                    "Desde 540.001 hasta 913.000 pesos" = 2,
+                                    "Desde 913.001 o mas" = 3)
+val_labels(BD_2020_input$vul_hm) <- c( "Vulnerable Mujer" = 1, "Vulnerable Hombre"= 2)
+val_labels(BD_2020_input$lf_leyman_hm) <- c( "Exp a Lid LF Mujer" = 1, "Exp a Lid LF Hombre"= 2)
+val_labels(BD_2020_input$la_leyman_hm) <- c( "Exp a Lid Aut Mujer" = 1, "Exp a Lid Aut Hombre"= 2)
+val_labels(BD_2020_input$lc_leyman_hm) <- c( "Exp a Lid Cons Mujer" = 1, "Exp a Lid Cons Hombre"= 2)
+val_labels(BD_2020_input$depre_hm) <- c( "Exp a SintDep Mujer" = 1, "Exp a SintDep Hombre"= 2)
+val_labels(BD_2020_input$climasex_hm) <- c( "Exp a ClimaSex Mujer" = 1, "Exp a ClimaSex Hombre"= 2)
+val_labels(BD_2020_input$k2_elevado_hm) <- c( "Exp a Distres Mujer" = 1, "Exp a Distres Hombre"= 2)
+val_labels(BD_2020_input$psicotrop_hm) <- c( "Exp a ConsPsic Mujer" = 1, "Exp a ConsPsic Hombre"= 2)
+val_labels(BD_2020_input$jerarquia_acoso) <- c( "Superiores" = 1, "Companeros"= 2, "Subalternos" = 3, "Externos" = 4)
+val_labels(BD_2020_input$jerarquia_acoso2) <- c( "Superiores" = 1, "Companeros"= 2, "Subalternos" = 3, "Externos" = 4)
+
+rio::export(BD_2020_input,"BD_2020_exp.sav")
+rio::export(BD_2020_input,"BD_2020_exp.dta")
+
+
+codebook(BD_2020_input)
 
 ```
