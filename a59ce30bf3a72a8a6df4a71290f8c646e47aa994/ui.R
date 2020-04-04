@@ -14,6 +14,8 @@ shinyUI(fluidPage(sidebarLayout(
   ),
   mainPanel(
     h3("Muestra de Datos"),
+    h5("Los datos se obtendrán en formato Año_Mes_Día_hora_minutos, con los nombres normalizados para que sean leídos por SPSS."),
+    h6("Desarrollador: Andrés González Santa Cruz"),
     tableOutput("contents")
     )
 )))
