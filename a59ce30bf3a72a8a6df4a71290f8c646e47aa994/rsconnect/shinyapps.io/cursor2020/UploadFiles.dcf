@@ -5,9 +5,9 @@ account: cursor2020
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1999394
-bundleId: 2968462
-url: https://cursor2020.shinyapps.io/UploadFiles/
-when: 1586010374.33282
+bundleId: 2998523
+url: https://agscl.shinyapps.io/UploadFiles/
+when: 1586562665.51778
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: _sheet_codigos.txt|2020-03-06 combinacion bds.do|2020_03_23_Mezcla Base de Datos.do|21-04-19 (BD_05_02_19) CULORG.csv|21-04-19 (BD_05_02_19) CULORG.sav|BD_2020.csv|BD_2020.dta|BD_2020_compilacion_versiones.dta|BD_2020_exp.dta|BD_2020_exp.sav|BD_2020_input.csv|BD_2020_input.xlsx|codebook.html|codebook.Rmd|data.sav|DataExplorer.R|descartando casos y limpiando base de datos mar 2020.do|desktop.ini|Etiquetas Finales BD_2020 2020-03-06.xlsx|index.md|Libro de C?digos.xlsx|mtcars.sav|NAQ_LCA_classpost_CULORG.dta|NAQ_LCA_classpost_NAQ.dta|report.html|Tratamiento de Variables FONDECYT 1170239 2020.docx|x.RData|y.RData|figure
+ignoredFiles: _sheet_codigos.txt|2020-03-06 combinacion bds.do|2020_03_23_Mezcla Base de Datos.do|BD_2020.csv|BD_2020.dta|BD_2020_compilacion_versiones.dta|BD_2020_exp.dta|BD_2020_exp.sav|BD_2020_input.xlsx|codebook.html|codebook.Rmd|DataExplorer.R|descartando casos y limpiando base de datos mar 2020.do|desktop.ini|Etiquetas Finales BD_2020 2020-03-06.xlsx|index.md|Libro de C?digos.xlsx|NAQ_LCA_classpost_CULORG.dta|NAQ_LCA_classpost_NAQ.dta|report.html|Tratamiento de Variables FONDECYT 1170239 2020.docx|figure

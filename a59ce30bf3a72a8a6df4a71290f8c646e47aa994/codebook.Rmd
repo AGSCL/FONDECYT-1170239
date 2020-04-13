@@ -33,6 +33,7 @@ if(!require(codebook)){install.packages("codebook")}
 if(!require(janitor)){install.packages("janitor")}
 if(!require(rio)){install.packages("rio")}
 if(!require(Statamarkdown)){install_github("hemken/Statamarkdown", quiet=T,  upgrade="never")}
+if(!require(xlsx)){install.packages("xlsx")}
 
 ```
 
@@ -72,7 +73,7 @@ A continuación podrá encontrar información resumida sobre las variables relat
 library(readr)
 
 BD_2020_input2 <-haven::read_dta("BD_2020.dta", encoding = "latin1")
-BD_2020_input <- readxl::read_excel("BD_2020_input.xlsx")
+BD_2020_input <- readxl::read_excel("G:/Mi unidad/DOCUMENTOS/6.TESIS 2018/Codebook_FONDECYT_1170239/a59ce30bf3a72a8a6df4a71290f8c646e47aa994/BD_2020_input.xlsx")
 #BD_2020_input <- read_csv("BD_2020_input.csv")
 #BD_2020_input <- readr::read_csv("BD_2020.csv")
 
@@ -132,6 +133,19 @@ BD_2020_input<- BD_2020_input %>%
   janitor::clean_names() 
 BD_2020_input[cols] <- lapply(BD_2020_input[cols], factor)
 BD_2020_input[cols2] <- lapply(BD_2020_input[cols2], as.character)
+
+#DTA
+#BD_2020_input2
+
+#EXCEL
+#BD_2020_input
+
+#estas columnas tenían decimales que el excel no procesaba, por eso lo reemplacé por los datos de stata
+malos<-c("weight", "classpost_culorg_alt1",	"classpost_culorg_alt2",	"classpost_culorg_alt3",	"classpost_culorg_alt4",	"classpost_culorg_alt5",	"classpost_culorg_alt6", "classpost_naq_def_1",	"classpost_naq_def_2",	"classpost_naq_def_3",	"classpost_naq_def_4",	"classpost_naq_def_5",	"classpost_naq_def_6", "desbalance")
+
+for (i in malos) {
+  BD_2020_input[i]<-BD_2020_input2[i]
+}
 
 #_#_#_#_#_#_#_#_#_#_#_#_#
 #procesed file
