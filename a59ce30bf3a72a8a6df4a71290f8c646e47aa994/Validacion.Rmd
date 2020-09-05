@@ -1,0 +1,1578 @@
+---
+title: "Material Suplementario"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    code_folding: hide
+    toc: true # table of content true
+    toc_depth: 5  # upto three depths of headings (specified by #, ## and ###)
+    toc_float: true
+bibliography: rmarkdown_validacion.bib
+nocite: '@*'
+---
+<!--- csl: sage-vancouver.csl [@james_1890; @bem_2011] @smith04 [-@smith04].--->
+<style type="text/css">
+.tablelines table, .tablelines td, .tablelines th {
+        border: 1px solid black;
+        }
+.centrado {
+    text-align: center;
+}
+.table.center {
+    margin-left:auto; 
+    margin-right:auto;
+  }
+.table_wrapper{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+code.r{
+  font-size: 8px;
+}
+body{ /* Normal  */
+      text-align: justify;
+  }
+.superbigimage{
+    overflow-y:scroll;
+    white-space: nowrap;
+}
+.superbigimage img{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+</style>
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px; text-align: justify;}
+</style>
+
+```{r setup0, include=F,eval=F}
+#bibliography: ref.bib
+
+rm(list=ls());gc()
+if(!require(googledrive)){install.packages("googledrive")}
+if(!require(here)){install.packages("here")}
+
+tryCatch(
+    {
+try(googledrive::drive_download(googledrive::as_id("1Tz6kjUfM3rvQwaAMoCoRXwOa8-y2bqAS")));1
+
+    },
+    error = function(e){
+                    tryCatch(
+                            {
+                              googledrive::drive_deauth()
+                            },
+                            error = function(e){
+                             
+                              try(googledrive::drive_download(googledrive::as_id("1Tz6kjUfM3rvQwaAMoCoRXwOa8-y2bqAS")));1
+                              
+                            }
+                    )
+          }
+)
+try(googledrive::drive_download(googledrive::as_id("1Tz6kjUfM3rvQwaAMoCoRXwOa8-y2bqAS",path =getwd())));1
+
+load(paste0(getwd(),"/BD_2020_for_svychisq.Rdata"))
+BD_2020_input_filter<-BD_2020_input[,c(paste0("naq",1:22),paste0("lid_des",1:14), paste0("a47_top_",1:6),"k6_2", "k2_elevado","climasex", "mujer", "precr1","zona","weight", "autonaq")]
+
+saveRDS(BD_2020_input_filter, file = "my_data.rds")
+readRDS(file = "my_data.rds")
+#six months: https://file.io/?expires=6m https://transfer.sh/%28/NVo5B/my_data.rds%29.tar.gz #https://transfer.sh/%28/NVo5B/my_data.rds%29.zip
+#download.file("https://transfer.sh/%28/NVo5B/my_data.rds%29.zip","my_data.rds")
+
+#download.file("https://transfer.sh/%28/NVo5B/my_data.rds%29.zip", temp)
+
+#unzip(temp,exdir=getwd())
+#readRDS(file = "my_data.rds")
+#readRDS(unzip(temp, "my_data.rds"))
+#BD_2020_input<-readRDS(unzip(temp))
+#unlink(temp)
+```
+
+```{r setup02, include=T}
+rm(list=ls());gc()
+temp <- tempfile()
+
+BD_2020_input<-readRDS(url("https://drive.google.com/uc?id=1RoTn1XaTpTbMXlj5mL8VSKk9t-8Zgro5","rb"))
+#xaringan::inf_mr()
+```
+
+```{r setup, include=T, message=F, warning=F}
+local({r <- getOption("repos")
+       r["CRAN"] <- "http://cran.r-project.org" 
+       options(repos=r)
+})
+if(!require(survey)){install.packages("survey")}
+if(!require(MASS)){install.packages("MASS")}
+if(!require(brant)){install.packages("brant")}
+if(!require(sandwich)){install.packages("sandwich")}
+if(!require(VGAM)){install.packages("VGAM")}
+if(!require(ordinal)){install.packages("ordinal")}
+#if(!require(epicalc)){install.packages("epicalc")}
+if(!require(lrtest)){install.packages("lmtest")}
+if(!require(generalhoslem)){install.packages("generalhoslem")}
+#if(!require(DAMisc)){install.packages("DAMisc")}
+if(!require(EffectStars)){install.packages("EffectStars")}
+if(!require(effects)){install.packages("effects")}
+if(!require(rms)){install.packages("rms")}
+if(!require(OptimalCutpoints)){install.packages("OptimalCutpoints")}
+if(!require(cutpointr)){install.packages("cutpointr")}
+if(!require(survey)){install.packages("survey")}
+if(!require(stargazer)){install.packages("stargazer")}
+if(!require(sjPlot)){install.packages("sjPlot")}
+if(!require(jtools)){install.packages("jtools")}
+if(!require(doRNG)){install.packages("doRNG")}
+if(!require(npROCRegression)){install.packages("npROCRegression")}
+if(!require(pec)){install.packages("pec")}
+if(!require(tab)){install.packages("tab")}
+if(!require(huxtable)){install.packages("huxtable")}
+if(!require(lavaan)){install.packages("lavaan")}
+if(!require(dplyr)){install.packages("dplyr")}
+if(!require(magrittr)){install.packages("magrittr")}
+if(!require(reshape2)){install.packages("reshape2")}
+if(!require(ggplot2)){install.packages("ggplot2")}
+if(!require(lavaan)){install.packages("lavaan")}
+if(!require(psych)){install.packages("psych")}
+if(!require(weights)){install.packages("weights")}
+if(!require(descr)){install.packages("descr")}
+if(!require(TAM)){install.packages("TAM")}
+if(!require(MVN)){install.packages("MVN")}
+if(!require(semTools)){install.packages("semTools")}
+if(!require(lavaan.survey)){install.packages("lavaan.survey")}
+if(!require(swfscMisc)){install.packages("swfscMisc")}
+if(!require(lme4)){install.packages("lme4")}
+if(!require(xlsx)){install.packages("xlsx")}
+if(!require(popbio)){install.packages("popbio")}
+if(!require(sandwich)){install.packages("sandwich")}
+if(!require(caret)){install.packages("caret")}
+if(!require(lmtest)){install.packages("lmtest")}
+if(!require(jtools)){install.packages("jtools")}
+if(!require(poliscidata)){install.packages("poliscidata")}
+if(!require(sjstats)){install.packages("sjstats")}
+if(!require(broom)){install.packages("broom")}
+if(!require(Weighted.Desc.Stat)){install.packages("Weighted.Desc.Stat")}
+if(!require(foreign)){install.packages("foreign")}
+#if(!require(weight)){install.packages("weight")}
+if(!require(semPlot)){install.packages("semPlot")}
+if(!require(car)){install.packages("car")}
+if(!require(binda)){install.packages("binda")}
+if(!require(data.table)){install.packages("data.table")}
+if(!require(metaSEM)){install.packages("metaSEM")}
+if(!require(devtools)){install.packages("devtools")}
+if(!require(GPArotation)){install.packages("GPArotation")}
+if(!require(skimr)){install.packages("skimr")}
+#if(!require(Epi)){install.packages("Epi")}
+if(!require(jtools)){install.packages("jtools")}
+if(!require(poliscidata)){install.packages("poliscidata")}
+if(!require(userfriendlyscience)){install.packages("userfriendlyscience")}
+if(!require(stringr)){install.packages("stringr")}
+if(!require(janitor)){install.packages("janitor")}
+if(!require(xaringan)){install.packages("xaringan")}
+
+
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#
+#FUNCIONES GENERICAS
+local({r <- getOption("repos")
+       r["CRAN"] <- "http://cran.r-project.org" 
+       options(repos=r)
+})
+copiar_nombres <- function(x,row.names=FALSE,col.names=TRUE,dec=",",...) {
+  if(class(ungroup(x))[1]=="tbl_df"){
+        if(options()$OutDec=="."){
+            options(OutDec = dec)
+            write.table(format(data.frame(x)),"clipboard",sep="\t",row.names=FALSE,col.names=col.names,...)
+            options(OutDec = ".")
+          return(x)
+        } else {
+            options(OutDec = ",")
+            write.table(format(data.frame(x)),"clipboard",sep="\t",row.names=FALSE,col.names=col.names,...)
+            options(OutDec = ",")
+          return(x)    
+        }
+  } else {
+        if(options()$OutDec=="."){
+            options(OutDec = dec)
+            write.table(format(x),"clipboard",sep="\t",row.names=FALSE,col.names=col.names,...)
+            options(OutDec = ".")
+          return(x)
+        } else {
+            options(OutDec = ",")
+            write.table(format(x),"clipboard",sep="\t",row.names=FALSE,col.names=col.names,...)
+            options(OutDec = ",")
+          return(x)       
+  }
+ }
+}  
+guardar_tablas <- function (x,y) {writexl::write_xlsx(as.data.frame(x, keeprownames= T),paste0(y,".xlsx"))}
+grabar_doc <- function(x) {paste0(dirname(file.choose()),"/",x)}
+
+
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+ajusteAFC <- function (x) {as.data.frame(cbind("Modelo"=deparse(substitute(x)),
+                    "gl"=round(lavaan::fitMeasures(x) ["df"],digits=3),
+                    "WLS X2"=round(lavaan::fitMeasures(x)["chisq"],digits=3),
+                    "CMIN/df"=round((lavaan::fitMeasures(x)["chisq"]/fitMeasures(x) ["df"]),digits=3),
+                    "aGFI"=round(lavaan::fitMeasures(x)["agfi"],digits=3),
+                    "GFI"=round(lavaan::fitMeasures(x)["gfi"],digits=3),
+                    "RMSEA [90% IC]"=paste0(round(lavaan::fitMeasures(x) ["rmsea"],3),"[",round(lavaan::fitMeasures(x) ["rmsea.ci.lower"],3),"-",round(lavaan::fitMeasures(x) ["rmsea.ci.upper"],3),"]"),
+                    "CFit"=round(lavaan::fitMeasures(x)["rmsea.pvalue"],digits=3),
+                    "CFI"=round(lavaan::fitMeasures(x)["cfi"],digits=3),
+                    "NNFI"=round(lavaan::fitMeasures(x)["nnfi"],digits=3)))
+
+  
+  return(
+    as.data.frame(cbind("Modelo"=deparse(substitute(x)),
+                    "gl"=round(lavaan::fitMeasures(x) ["df"],digits=3),
+                    "WLS X2"=sprintf("%7.3f",round(lavaan::fitMeasures(x)["chisq"],digits=3)),
+                    "CMIN/df"=sprintf("%5.3f",round((lavaan::fitMeasures(x)["chisq"]/fitMeasures(x) ["df"]),digits=3)),
+                    "aGFI"=sprintf("%5.3f",round(lavaan::fitMeasures(x)["agfi"],digits=3)),
+                    "GFI"=sprintf("%5.3f",round(lavaan::fitMeasures(x)["gfi"],digits=3)),
+                    "RMSEA [90% IC]"=paste0(sprintf("%5.3f",round(lavaan::fitMeasures(x) ["rmsea"],3)),"[",sprintf("%5.3f",round(lavaan::fitMeasures(x) ["rmsea.ci.lower"],3)),"-",sprintf("%5.3f",round(lavaan::fitMeasures(x) ["rmsea.ci.upper"],3)),"]"),
+                    "CFit"=sprintf("%5.3f",round(lavaan::fitMeasures(x)["rmsea.pvalue"],digits=3)),
+                    "CFI"=sprintf("%5.3f",round(lavaan::fitMeasures(x)["cfi"],digits=3)),
+                    "NNFI"=sprintf("%5.3f",round(lavaan::fitMeasures(x)["nnfi"],digits=3))))
+  )
+}
+
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+LR_svy2<- function (x, y, z) {
+  return(paste0("-2Log(LR) (",
+                regTermTest(x,as.formula(paste0("~",y,"+",z)), method="LRT")$df, ", ",
+                regTermTest(x,as.formula(paste0("~",y,"+",z)), method="LRT")$ddf, ")= ",
+                sprintf(round(as.numeric(regTermTest(x,as.formula(paste0("~",y,"+",z)), method="LRT")$chisq/
+                                           regTermTest(x,as.formula(paste0("~",y,"+",z)), method="LRT")$lambda), 3), fmt = '%#.3f'),
+                regTermTest(x,as.formula(paste0("~",y,"+",z)), method="LRT")$ddf, ", p=",
+                round(regTermTest(x,as.formula(paste0("~",y,"+",z)),method="LRT")$p,5)))
+}
+LR_svy1<- function (x, y) {
+  return(paste0("-2Log(LR) (",
+                regTermTest(x,as.formula(paste0("~",y)), method="LRT")$df, ", ",
+                regTermTest(x,as.formula(paste0("~",y)), method="LRT")$ddf, ")= ",
+                sprintf(round(as.numeric(regTermTest(x,as.formula(paste0("~",y)), method="LRT")$chisq/
+                                           regTermTest(x,as.formula(paste0("~",y)), method="LRT")$lambda), 3), fmt = '%#.3f'),
+                regTermTest(x,as.formula(paste0("~",y)), method="LRT")$ddf, ", p=",
+                round(regTermTest(x,as.formula(paste0("~",y)),method="LRT")$p,5)))
+  
+}
+LR_svy3<- function (x, y, z, a) {
+  paste0("-2Log(LR) (",
+         regTermTest(x,as.formula(paste0("~",y,"+",z,"+",a)), method="LRT")$df, ", ",
+         regTermTest(x,as.formula(paste0("~",y,"+",z,"+",a)), method="LRT")$ddf, ")= ",
+         sprintf(round(as.numeric(regTermTest(x,as.formula(paste0("~",y,"+",z,"+",a)), method="LRT")$chisq/
+                                    regTermTest(x,as.formula(paste0("~",y,"+",z,"+",a)), method="LRT")$lambda), 3), fmt = '%#.3f'),
+         regTermTest(x,as.formula(paste0("~",y,"+",z,"+",a)), method="LRT")$ddf, ", p=",
+         round(regTermTest(x,as.formula(paste0("~",y,"+",z,"+",a)),method="LRT")$p,5))
+}
+weighted.moments <-
+  function(x,w8=NULL){
+    if(is.null(w8)) w8<-rep(1,length(x))
+    w  <- w8/sum(w8)
+    n  <- length(x)
+    Ex <- t(x)%*%w
+    wm <- Ex
+    Ex2<- t(x*x)%*%w 
+    wsd<- sqrt(1/(1-sum(w^2))*(Ex2-wm^2)) # using Cramer and cov.wt (using unbiased method)
+    wtd.sd<-sqrt(wtd.var(x,w8)) #using Hmisc
+    Ex3<- t(x^3)%*%w
+    wsk<- n^(5/2)/((n-1)*(n-2))*t(w^(3/2))%*%(((x-wm)/wsd)^3)
+    m2.stata<- t(w)%*%((x-wm)^2) # see summarize in stata manual p.1825-6
+    m3.stata<- t(w)%*%((x-wm)^3) 
+    wsk.stata<-m3.stata / m2.stata^(3/2) 
+    list(fm=Ex,weighted.mean=wm,sm=Ex2,weighted.sd=wsd,wtd.sd=wtd.sd,tm=Ex3,w.skew.SAS=wsk,w.skew.Stata=wsk.stata) # using formulae from SAS and from Stata
+  }
+
+exportar<- function (x) {temp <- round(data.frame(cbind(lmtest::coeftest(x), 
+                                                        exp(coef(x)),exp(confint(x)))),3)
+temp2 <- setNames(temp, c("Variables","Est","Std. Err.", "Z value", "p|z|","OR","95% CI - +"))
+return(copiar_nombres(temp2))}
+```
+```{r paso0_definir_diseno_muestral,eval=T, echo=T, paged.print=TRUE, eval=T}
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+dsgn_BD_05_02 <- survey::svydesign(ids = ~1, data = BD_2020_input, weights = ~weight)
+
+dsgn_mujer<- subset(BD_2020_input,mujer==1)
+dsgn_hombre<- subset(BD_2020_input,mujer==0)
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+options(OutDec= ".")
+```
+
+# Exploratorio
+
+A continuación se presenta un resumen de los datos.
+
+```{r paso1_definir_var_y_transf,eval=T, echo=T, paged.print=TRUE, eval=T}
+NAQ_R2<- paste0("naq",1:22)
+LID_DES<- paste0("lid_des", 1:14)
+  
+BD_2020_input%>%
+dplyr::mutate_at(.vars= vars(naq1, naq2, naq3,naq4, naq5, naq6, naq7, naq8, naq9, naq10, naq11, naq12, naq13, naq14, naq15, naq16, naq17, naq18, naq19, naq20, naq21, naq22),.funs = ~as.numeric(.)-1)%>%
+  dplyr::mutate_at(.vars= vars(lid_des1, lid_des2, lid_des3,lid_des4, lid_des5, lid_des6, lid_des7, lid_des8, lid_des9, lid_des10, lid_des11, lid_des12, lid_des13, lid_des14),.funs = ~as.numeric(.)-1)%>%
+  
+  dplyr::mutate(naq_r_af_sum = rowSums(select(., .dots = paste0("naq",c(8,9,22))),na.rm=T))%>%
+  dplyr::mutate(naq_r_ap_sum = rowSums(select(., .dots = paste0("naq",c(2,4,5,6,7,10,11,12,13,15,17,20))),na.rm=T))%>%
+  dplyr::mutate(naq_r_rt_sum = rowSums(select(., .dots = paste0("naq",c(1,3,14,16,18, 19, 21))),na.rm=T))%>%
+  dplyr::mutate(naq_sum = rowSums(select(., .dots = paste0("naq",1:22)),na.rm=T))%>%
+  dplyr::mutate(lid_des_sum = rowSums(select(., .dots = paste0("lid_des",c(3,5,7,9,1,4,8,10))),na.rm=T))%>%
+  
+  dplyr::mutate(lc = rowSums(select(., .dots = paste0("lid_des",c(2,6,11,12,13,14))),na.rm=T))%>%
+  dplyr::mutate(lc2 = rowSums(select(., .dots = paste0("lid_des",c(6,11,12,14))),na.rm=T))%>%
+  dplyr::mutate(lf = rowSums(select(., .dots = paste0("lid_des",c(3,5,7,9))),na.rm=T))%>%
+  dplyr::mutate(lf2 = rowSums(select(., .dots = paste0("lid_des",c(5,7,9))),na.rm=T))%>%
+  dplyr::mutate(la = rowSums(select(., .dots = paste0("lid_des",c(1,4,8,10))),na.rm=T))%>%
+  dplyr::mutate(lid_des_sum = rowSums(select(., .dots = paste0("lid_des",c(3,5,7,9,1,4,8,10))),na.rm=T))%>%
+  dplyr::mutate(lid_des_sum2 = rowSums(select(., .dots = paste0("lid_des",c(5,7,9,1,4,8,10))),na.rm=T))%>%
+  
+dplyr::mutate_at(.vars= vars(naq1, naq2, naq3,naq4, naq5, naq6, naq7, naq8, naq9, naq10, naq11, naq12, naq13, naq14, naq15, naq16, naq17, naq18, naq19, naq20, naq21, naq22),.funs = ~factor(.))%>%
+  dplyr::mutate_at(.vars= vars(lid_des1, lid_des2, lid_des3,lid_des4, lid_des5, lid_des6, lid_des7, lid_des8, lid_des9, lid_des10, lid_des11, lid_des12, lid_des13, lid_des14),.funs = ~factor(.))%>%
+ # janitor::tabyl(naq_sum,naq_sum2)
+  assign("BD_2020_input",., envir = .GlobalEnv)
+
+BD_2020_input%>%
+dplyr::mutate_at(.vars= vars(naq1, naq2, naq3,naq4, naq5, naq6, naq7, naq8, naq9, naq10, naq11, naq12, naq13, naq14, naq15, naq16, naq17, naq18, naq19, naq20, naq21, naq22),.funs = ~as.numeric(.)-1)%>%
+  dplyr::mutate_at(.vars= vars(lid_des1, lid_des2, lid_des3,lid_des4, lid_des5, lid_des6, lid_des7, lid_des8, lid_des9, lid_des10, lid_des11, lid_des12, lid_des13, lid_des14),.funs = ~as.numeric(.)-1)%>%
+  assign("BD_2020_input_num",., envir = .GlobalEnv)
+
+skimr::skim(BD_2020_input[,c(NAQ_R2,LID_DES,paste0("a47_top_",1:6), "k2_elevado","climasex", "mujer", "precr1","zona","autonaq")])%>% 
+  tibble::as_tibble() %>%
+  dplyr::mutate(complete_rate=scales::percent(1-complete_rate,3))%>%
+  dplyr::select(-factor.ordered)%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S1. Resumen de Variables"),
+               col.names = c("Tipo","Variable","Perdidos","% Perdidos","Nro. de Valores Únicos","Valores más frecuentes"),
+align =rep('c', 101)) %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+     kableExtra::add_footnote(c("Nota. Variables que empiezan con 'naq' aluden a los ítems del cuestinoario NAQ-R;","Variables que empiezan con 'lid_des' aluden a los ítems del cuestinoario DLS;","Variables que empiezan con 'a47_top' aluden a los ítems del la escala de Distrés Psicológico (K6);","k2_elevado= Suma puntajes brutos K6 Dicotomizada (2= Distrés elevado)","climasex= Clima Sexista","mujer= Sexo(1= Mujer)","precr1= Índice de Precariedad Laboral","zona= Zona Metropolitana de Residencia (1= Santiago,2=Valparaíso, 3=Concepción)", "autonaq= Autodefinición NAQ-R, como víctima de acoso laboral"), 
+                            notation = "none")%>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+```
+
+<br>
+
+De la Tabla S1 se puede interpretar que existe un bajo porcentaje de valores perdidos. Por otra parte, la naturaleza de los ítems es ordinal o dictómica.
+
+<br>
+
+```{r paso1_exp_sum_var,eval=T, echo=T, paged.print=TRUE, eval=T}
+dsgn_BD_05_02 <- survey::svydesign(ids = ~1, data = BD_2020_input, weights = ~weight)
+
+dsgn_mujer<- subset(BD_2020_input,mujer==1)
+dsgn_hombre<- subset(BD_2020_input,mujer==0)
+#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
+#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
+n<- c("naq_sum", "naq_r_ap_sum", "naq_r_rt_sum", "naq_r_af_sum", "lc", "lc2","la", "lf", "lf2", "lid_des_sum","lid_des_sum2", "k6_2")
+desc<-data.frame()
+for (i in c("naq_sum", "naq_r_ap_sum", "naq_r_rt_sum", 
+            "naq_r_af_sum", "lc", "lc2","la", "lf", "lf2", 
+            "lid_des_sum","lid_des_sum2", "k6_2")) {
+  dat<- data.table::as.data.table(cbind("M (DE)"= paste0(round(unlist(svymean(as.formula(paste0("~",i)),dsgn_BD_05_02,na.rm=T))[1],2),"\n(",
+                                                         round(Weighted.Desc.Stat::w.sd(BD_2020_input[i], BD_2020_input$weight),2),")"),
+                                        "Mdn (Q1-Q3)"=paste0(round(svyquantile(as.formula(paste0("~", i)), q=.5, dsgn_BD_05_02,na.rm=T),2), "\n(",
+                                                             round(svyquantile(as.formula(paste0("~", i)), q=.25, dsgn_BD_05_02,na.rm=T),2),"-",
+                                                             round(svyquantile(as.formula(paste0("~", i)), q=.75, dsgn_BD_05_02,na.rm=T),2),")"),
+                                        Kurt= round(Weighted.Desc.Stat::w.kurtosis(BD_2020_input[i], BD_2020_input$weight),2),
+                                        Skew= round(Weighted.Desc.Stat::w.skewness(BD_2020_input[i], BD_2020_input$weight),2)))
+  desc<- rbind(desc, dat)
+}
+desc<-
+desc%>%
+  dplyr::mutate(Variable=c("Suma de puntajes brutos NAQ-R",
+                      "Suma de puntajes brutos Acoso dirigido a la Persona",
+                      "Suma de puntajes brutos Rel. con el Trabajo",
+                      "Suma de puntajes brutos Acoso Físico",
+                      "Suma de puntajes brutos Lid. Constructivo (ít. 2,6,11,12,13 & 14)",
+                      "Suma de puntajes brutos Lid. Constructivo (ít. 6,11,12 & 14)",
+                      "Suma de puntajes brutos Lid. Autoritario (ít. 1,4,8 & 10)",
+                      "Suma de puntajes brutos Lid. Laissez-Faire (ít. 3,5,7 & 9)",
+                      "Suma de puntajes brutos Lid. Laissez-Faire (ít. 5,7 & 9)",
+                      "Suma de puntajes brutos Lid. Destructivos (ít. 3,5,7,9,1,4,8 & 10)",
+                      "Suma de puntajes brutos Lid. Destructivos (ít. 5,7,9,1,4,8 & 10)",
+                      "Suma de puntajes brutos Distrés Psicológico"))%>%
+  dplyr::select(Variable,everything())
+
+#pearson
+set.seed(123)
+cor_wtd<-svycor(~naq_sum+ naq_r_ap_sum+ naq_r_rt_sum+ naq_r_af_sum+ lc+ lc2+la+ lf+ lf2+ lid_des_sum+lid_des_sum2+ k6_2
+, design = dsgn_BD_05_02, digits = 2, sig.stats = TRUE, bootn = 10000, mean1 = TRUE)
+
+cor_wtd_sig<-
+data.frame(cbind(cor=data.table(round(matrix(cor_wtd$cors),2)),
+p=data.table(matrix(cor_wtd$p.values))))%>%
+  dplyr::rename("cor"="cor.V1","p"="p.V1")%>%
+  dplyr::mutate(cor=dplyr::case_when(p<.001~paste0(sprintf("%4.2f",cor),"***"),
+                    p<.01~paste0(sprintf("%4.2f",cor),"**"),
+                    p<.05~paste0(sprintf("%4.2f",cor),"*"),
+                    TRUE~paste0(sprintf("%4.2f",cor))))%>%
+  dplyr::mutate(cor=ifelse(grepl("1.00",cor),"",cor))%>%
+  dplyr::select(-p)
+
+pearson<-
+data.frame(Vars=cbind(c("naq_sum", "naq_r_ap_sum", "naq_r_rt_sum", "naq_r_af_sum", "lc", "lc2","la", "lf", "lf2", "lid_des_sum","lid_des_sum2", "k6_2"),
+      `1`=cor_wtd_sig[1:length(n),],
+      `2`=cor_wtd_sig[(length(n)*1)+1:(length(n)*1),],
+      `3`=cor_wtd_sig[(length(n)*2)+1:(length(n)*1),],
+      `4`=cor_wtd_sig[(length(n)*3)+1:(length(n)*1),],
+      `5`=cor_wtd_sig[(length(n)*4)+1:(length(n)*1),],
+      `6`=cor_wtd_sig[(length(n)*5)+1:(length(n)*1),],
+      `7`=cor_wtd_sig[(length(n)*6)+1:(length(n)*1),],
+      `8`=cor_wtd_sig[(length(n)*7)+1:(length(n)*1),],
+      `9`=cor_wtd_sig[(length(n)*8)+1:(length(n)*1),],
+      `10`=cor_wtd_sig[(length(n)*9)+1:(length(n)*1),],
+      `11`=cor_wtd_sig[(length(n)*10)+1:(length(n)*1),],
+      `12`=cor_wtd_sig[(length(n)*11)+1:(length(n)*1),]))
+yy<-
+data.frame(cbind(desc,pearson[-1]))%>%
+  dplyr::select_all(~gsub("^Vars", "", .))%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ",", big.mark = "."),
+               caption = paste0("Tabla S2. Resumen de Variables, Suma de Ítems (Ponderada)"),
+               col.names = c("Variable","M (DE)",  "Mdn(Q1-Q3)", "Curtosis", "Asimetría",paste0(1:12)))
+      kableExtra::column_spec(yy,1, width="20em")%>%
+      kableExtra::add_footnote(c("Nota. Mdn= Mediana; Q1= Percentil 25; Q3= Percentil 75; Kurt= Curtosis; Skew= Asimetría"), 
+                            notation = "none")%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10)%>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+```
+
+<br>
+
+Un análisis de la suma de los ítems ponderados por sexo y región, permiten sospechar que las variables no siguen una distribución normal.
+
+<br>
+
+```{r fig1_naq_qq, echo=T, fig.align='center', fig.pos='H', fig.cap= "Figura S1. Gráficos Cuantil-Cuantil Ítems NAQ-R (intervalos de confianza en azul)", fig.height=14, message=FALSE, error=T}
+par(mfrow=c(7,4))
+for (k in 1:22) {
+         car::qqPlot(data.frame(BD_2020_input_num)[,paste0("naq",k)], col = "skyblue4",  main = paste("Ítem NAQ-R",k),xlab="Cuartiles Teóricos", ylab="Cuartiles Empíricos")
+        y <- rnorm(1995)*4-4
+        qqline(y, col = "red",distribution = qnorm)
+}
+```
+<br>
+
+Lo anterior, puede corroborarse en los gráficos cuantil-cuantil presentados, en los que la línea roja representa una distirbución normal, mientras que los puntos azules reflejan la distribución presente en los datos, las cuales se superponen en el menor de los casos.
+
+<br>
+
+```{r paso2a_mvn_naq,eval=T, echo=T, paged.print=TRUE, eval=T}
+options(knitr.kable.NA = '')
+MVN::mvn(BD_2020_input_num[,paste0("naq",1:22)], subset = NULL, mvnTest = "mardia", covariance = TRUE, tol = 1e-25, alpha = 0.5,
+         scale = FALSE, desc = TRUE, transform = "none", R = 1000,
+         univariateTest = "Lillie",
+         univariatePlot = "none", multivariatePlot = "none",
+         multivariateOutlierMethod = "none", bc = FALSE, bcType = "rounded",
+         showOutliers = FALSE, showNewData = FALSE)$multivariateNormality%>%
+  data.frame()%>%
+  dplyr::mutate(across(c("Statistic","p.value"),~ifelse(grepl("NA",.),NA_real_,as.numeric(as.character(.)))))%>%
+  dplyr::mutate(Statistic=sprintf("%8.2f",Statistic))%>%
+  dplyr::mutate(p.value=sprintf("%5.3f",p.value))%>%
+  dplyr::mutate(across(c("Statistic","p.value"),~ifelse(grepl("NA",.),"-",as.character(.))))%>%
+   knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S3a. Normalidad Multivariada NAQ-R"),
+               col.names = c("Prueba","Estadistico","Valor p","Normalidad"),
+align =c('l',rep('c', 101)))%>%
+      kableExtra::add_footnote(c("Nota. Mardia Skewness= Asimetría Multivariante de Mardia (1970); Mardia Kurtosis= Curtosis Multivariante de Mardia (1970)"), notation = "none")%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10)
+```
+
+<br>
+
+A partir de la prueba de Mardia, se puede interpretar que los ítems del NAQ no siguen una distirbución multivariada normal. 
+
+<br>
+
+```{r fig2_naq_qq, echo=T, fig.align='center', fig.pos='H', fig.cap= "Figura S2. Gráficos Cuantil-Cuantil Ítems DLS (intervalos de confianza en azul)", fig.height=14, message=FALSE, error=T}
+#grey(0.8)
+par(mfrow=c(7,4))
+for (k in 1:14) {
+         car::qqPlot(data.frame(BD_2020_input_num)[,paste0("lid_des",k)], col = "skyblue4", main = paste("Ítem DLS",k),
+                xlab="Cuartiles Teóricos",
+                ylab="Cuartiles Empíricos")
+        qqline(y, col = "red",distribution = qnorm)
+}
+```
+<br>
+
+Una observación de los gráficos expuestos nos permite interpretar que los ítems del DLS no siguen una distribución normal. Ya que al igual que en los ítems del NAQ, las respuestas observadas se alejan de un patrón de distribución normal (línea roja), razón por la que no se superponen.
+
+<br>
+
+```{r paso2a_mvn_lid_des,eval=T, echo=T, paged.print=TRUE, eval=T}
+options(knitr.kable.NA = '')
+MVN::mvn(BD_2020_input_num[,paste0("lid_des",1:14)], subset = NULL, mvnTest = "mardia", covariance = TRUE, tol = 1e-25, alpha = 0.5,
+         scale = FALSE, desc = TRUE, transform = "none", R = 1000,
+         univariateTest = "Lillie",
+         univariatePlot = "none", multivariatePlot = "none",
+         multivariateOutlierMethod = "none", bc = FALSE, bcType = "rounded",
+         showOutliers = FALSE, showNewData = FALSE)$multivariateNormality%>%
+  data.frame()%>%
+  dplyr::mutate(across(c("Statistic","p.value"),~ifelse(grepl("NA",.),NA_real_,as.numeric(as.character(.)))))%>%
+  dplyr::mutate(Statistic=sprintf("%8.2f",Statistic))%>%
+  dplyr::mutate(p.value=sprintf("%5.3f",p.value))%>%
+  dplyr::mutate(across(c("Statistic","p.value"),~ifelse(grepl("NA",.),"-",as.character(.))))%>%
+   knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S3b. Normalidad Multivariada DLS"),
+               col.names = c("Prueba","Estadistico","Valor p","Normalidad"),
+align =c('l',rep('c', 101)))%>%
+    kableExtra::add_footnote(c("Nota. Mardia Skewness= Asimetría Multivariante de Mardia (1970); Mardia Kurtosis= Curtosis Multivariante de Mardia (1970)"), notation = "none")%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10)
+```
+
+<br>
+
+De igual forma, los ítems de  DLS tampoco siguen una distribución multivariada normal.
+
+<br>
+
+# Factorial
+
+## NAQ-R
+
+Generamos una serie de modelos, de igual forma que el ejrcicio hecho por Einarsen, et al., para la validación de la escala en el Reino Unido [@Einarsen2009]. El primer modelo especifica sólo 1 Factor (Actos negativos) compuestos por los 22 ítems. El segundo especifica 2 Sub-factores correlacionados: acoso relacionado con el trabajo (ítems 1,3,16, 18, 19 y 21) y dirigido a la persona (ítems 2, 4, 5, 6, 7, 10, 11, 12, 13, 15, 17, 20, 8, 9 y 22). El tercero está compuesto por acoso relacionado con el trabajo, relacionado con la persona y físicamente intimidatorio.
+
+<br>
+
+```{r paso1_ponderar,eval=T, echo=T, paged.print=TRUE, eval=T}
+#especifico el modelo
+mod_naqr  <-"RT =~ naq1 + naq3  +naq14 +naq16 +naq18 +naq19 +naq21
+AP =~ naq2  +naq4  +naq5  +naq6  +naq7  +naq10+naq11 +naq12 +naq13 +naq15 +naq17 +naq20
+AF =~ naq8  +naq9  +naq22"
+
+mod_naqr1  <-"naq_R =~ naq1 + naq3  +naq14 +naq16 +
+naq18 +naq19 +naq21+ naq2  +naq4  +naq5  +
+naq6  +naq7  +naq10+naq11 +naq12 +naq13 +
+naq15 +naq17 +naq20 + naq8  +naq9  +naq22"
+mod_naqr2  <-"RT =~ naq1+ naq3+naq14+naq16+naq18+naq19+naq21
+AP =~ naq2  +naq4  +naq5  +naq6  +naq7  +naq10+naq11 +naq12 +naq13 +naq15 +naq17 +naq20+ naq8  +naq9  +naq22"
+naq_fa <- lavaan::cfa(mod_naqr, data = BD_2020_input, ordered=NAQ_R2, estimator= "WLS", warn = T)
+naq_fa1f <- lavaan::cfa(mod_naqr1, data = BD_2020_input, ordered=NAQ_R2, estimator= "WLS", warn = T)
+naq_fa2f <- lavaan::cfa(mod_naqr2, data = BD_2020_input, ordered=NAQ_R2, estimator= "WLS", warn = T)
+```
+
+```{r paso1_comp_tab_modelos_res,eval=T, echo=T, paged.print=TRUE, eval=T}
+data.table(data.frame(rbind(ajusteAFC(naq_fa),ajusteAFC(naq_fa2f),ajusteAFC(naq_fa1f))),keep.rownames = T)%>%
+  dplyr::mutate(rn=c("Tres Factores","Dos Factores", "Un Factor"))%>%
+  dplyr::select(-Modelo)%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S4. Comparativo Índices de Ajuste de Modelos Propuestos NAQ-R"),
+               align =c('l',rep('c', 101)),
+               col.names = c("Modelo","gl","WLS X2","CMIN/df","aGFI","GFI", "RMSEA\n[IC 90%]","CFit","CFI","NNFI")) %>%
+      kableExtra::row_spec(1, bold= T, color= "black", background= "white")%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10)
+```
+
+<br>
+
+A nivel descriptivo, el modelo que obtiene los mejores índices de ajuste es el tercero, compuesto por tres sub-factores.
+
+<br>
+
+```{r paso2_comparativo_anova_modelos,eval=T, echo=T, paged.print=TRUE, eval=T}
+lavaan::anova(naq_fa,naq_fa2f,naq_fa1f)%>%
+  data.frame()%>%
+  dplyr::mutate(mod=c("Modelo de 3 factores","Modelo de 2 factores (Comparación con modelo de 3 factores)","Modelo de 2 factores (Comparación con modelo de 1 factor)"))%>%
+  dplyr::select(mod, everything())%>%#Df	AIC	BIC	Chisq	Chisq diff	Df diff	Pr(>Chisq)
+  dplyr::select(-AIC,	-BIC)%>%
+    dplyr::mutate(Chisq.diff=dplyr::case_when(Pr..Chisq.<.001~paste0(sprintf("%4.2f",Chisq.diff),"***"),
+                    Pr..Chisq.<.01~paste0(sprintf("%4.2f",Chisq.diff),"**"),
+                    Pr..Chisq.<.05~paste0(sprintf("%4.2f",Chisq.diff),"*"),
+                    TRUE~paste0(sprintf("%4.2f",Chisq.diff))))%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S5. Comparativo Índices de Ajuste, Diferencias Chi-Cuadrado entre Modelos Anidados"),
+               align =c('l',rep('c', 101)),
+               col.names = c("Parámetros","gl","Chi Cuadrado","Diff. Chi Cuadrado", "Diferencias en gl","Valores p (Diferencias)"))%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10)
+```
+<br>
+
+De acuerdo a la prueba anova, el índice Chi-cuadrado es significativamente menor en el modelo de tres factores. 
+
+<br>
+
+A continuación, se muestra el detalle del modelo de 3 factores.
+
+<br>
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:350px; overflow-x: scroll; width:100%">
+```{r paso3_summ_naq_3_fac,eval=T, echo=T, paged.print=TRUE, eval=T}
+summary(naq_fa)
+```
+</div>
+
+<br>
+
+A continaución se presenta una Figura Scon la solución que asume tres factores.
+
+<br>
+
+```{r fig1_naq_fa, echo=T, fig.align='center', fig.pos='H', fig.cap= "Figura S3. Cargas factoriales estandarizadas y comunalidades para NAQ-R", message=FALSE, error=T, fig.retina=2}
+semPlot::semPaths(naq_fa, residuals=T, what="std",label.cex=1.2, edge.label.cex=1, sizeMan=6, thresholds=F, legend=F,intercepts=FALSE, 
+                  curveAdjacent = TRUE,title=F, layout="tree2",fade=FALSE,edge.color="black",
+                  edge.label.position=c(rep(c(0.5,0.55,0.6),7),0.5,rep(0.5,27),rep(0.5,26)),
+                  sizeLat = 8,cut=1.2,curve=1.1, curvePivot=T,borders=FALSE, nCharNodes=0, 
+                  nCharEdges=0,optimizeLatRes=F,edge.width = 1, node.width =1, node.height= 1, 
+                  nodeLabels=c(paste0("",c(1,3,14,16,18,19,21,2,4,5,6,7,10,11,12,13,15,17,20,8,9,22)),"RT", "AP", "AF"), 
+                  mar = c(3.1, 0.5, 4.5, 0.5))
+```
+
+## DLS
+
+<br>
+
+Se especificaron los modelos que asumen la presencia de un factor, Liderazgos, compuesto por los 14 ítems. El siguiente modelo asume dos factores: liderazgos destructivos (ítems 3, 5, 7, 9, 1, 4, 8 y 10) y constructivos (ítems 2, 6, 11, 12, 13 y 14). El último modelo asume tres factores: liderazgo laissez-faire (ítems 3, 5, 7 y 9), autoritario (1, 4, 8 y 10) y constructivo (2, 6, 11, 12, 13 y 14) [@Aasland2010].
+
+<br>
+
+```{r paso1_esp_modelos_dls,eval=T, echo=T, paged.print=TRUE, eval=T}
+mod_lid_des_1f_inicial<-   "lid_des_CONS=~ lid_des2 + lid_des6 +lid_des11 +lid_des12+lid_des13+lid_des14+lid_des3+lid_des5+lid_des7+lid_des9+ lid_des1+lid_des4+lid_des8+lid_des10"
+mod_lid_des_2f_inicial<-   "LC=~ lid_des2 + lid_des6 +lid_des11 +lid_des12+lid_des13+lid_des14
+LD=~ lid_des3+lid_des5+lid_des7+lid_des9+lid_des1+lid_des4+lid_des8+lid_des10"
+mod_lid_des_3f_inicial<-   "LC=~ lid_des2 + lid_des6 +lid_des11 +lid_des12+lid_des13+lid_des14
+LF=~ lid_des3+lid_des5+lid_des7+lid_des9
+LT=~ lid_des1+lid_des4+lid_des8+lid_des10"
+```
+
+
+```{r paso2_definir_modelos_lavaan,eval=T, echo=T, paged.print=TRUE, eval=T}
+#LID_DES <- names(BD_2020_input[paste0("lid_des", 1:14)])
+LID_DES<- paste0("lid_des", 1:14)
+lid_des_fa_1f_inicial<- lavaan::cfa(mod_lid_des_1f_inicial, data = BD_2020_input, ordered=LID_DES, estimator= "WLS", warn = T)
+lid_des_fa_2f_inicial<- lavaan::cfa(mod_lid_des_2f_inicial, data = BD_2020_input, ordered=LID_DES, estimator= "WLS", warn = T)
+lid_des_fa_3f_inicial<- lavaan::cfa(mod_lid_des_3f_inicial, data = BD_2020_input, ordered=LID_DES, estimator= "WLS", warn = T)
+```
+
+<br>
+
+A continuación, se presentan los índices de ajuste de los modelos de uno, dos y tres factores.
+
+<br>
+
+```{r paso3_comp_tab_modelos_res_dls,eval=T, echo=T, paged.print=TRUE, eval=T}
+data.table(data.frame(rbind(ajusteAFC(lid_des_fa_3f_inicial),ajusteAFC(lid_des_fa_2f_inicial),ajusteAFC(lid_des_fa_1f_inicial))),keep.rownames = T)%>%
+  dplyr::mutate(rn=c("Tres Factores","Dos Factores", "Un Factor"))%>%
+  dplyr::select(-Modelo)%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S6. Comparativo Índices de Ajuste de Modelos Propuestos DLS"),
+               align =c('l',rep('c', 101)),
+               col.names = c("Modelo","gl","WLS X2","CMIN/df","aGFI","GFI", "RMSEA\n[IC 90%]","CFit","CFI","NNFI")) %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10)
+```
+
+<br>
+
+El modelo de 3 factores especificado que asume la presencia 3 tipos de variables latentes correspondientes a los liderazgos planteados originalmente por Aasland, et al. (2010), no presenta un ajuste suficiente de acuerdo a los parámetros definidos. Igualmente, modelos que asumieron la presencia de uno o dos factores no presentan mejores índices de ajuste. Por lo mismo, se reespecifica dicho modelo conforme a índices de modificación. Estos criterios son de utilidad para orientar los parámetros a reespecificar, de la estructura factorial evaluada inicialmente.
+
+<br>
+
+De todas formas se presenta el detalle de la solución factorial del modelo de tres factores.
+
+<br>
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:350px; overflow-x: scroll; width:100%">
+```{r paso2_summ_naq_3_fac,eval=T, echo=T, paged.print=TRUE, eval=T}
+summary(lid_des_fa_3f_inicial)
+```
+</div>
+
+```{r fig2_dls, echo=T, fig.align='center', fig.pos='H', fig.cap= "Figura S4. Cargas factoriales estandarizadas y comunalidades para DLS (solución inicial a estudiar)", message=FALSE, error=T, fig.retina=2}
+semPlot::semPaths(lid_des_fa_3f_inicial, residuals=T, what="std", label.cex=1.5, 
+                  edge.label.cex=1,fade=FALSE,
+                  thresholds = F,
+                  edge.label.position=c(rep(c(0.45,0.55),7),rep(0.5,19),rep(0.5,18)), #11  it, #17 #14 parámetros para las cargas
+                  intercepts=F, curveAdjacent = TRUE,title=F, layout="tree3",sizeMan=5, gui = T, 
+                  allVars = FALSE,cut=1.1,sizeLat=5, edge.color="black",
+                  curvePivot=T,borders=FALSE, edge.width = 0.5, node.width =1, node.height= 1,label.scale=T,curve = 1.5,
+                  nodeLabels=c(paste0("",c(2,6,11,12,13,14,3,5,7,9,1,4,8,10)),"Cons.","LsFr.","Aut."),
+                  mar = c(5.8, 0.8, 7.8, 0.8))
+                  #edge.label.position=c(rep(c(0.45,0.55),5),0.45,rep(0.5,16),rep(0.5,15)), #11  it, 
+#lid_des_fa_3f_inicial
+```
+
+### Reespecificación del Modelo DLS de 3 Factores
+
+<br>
+
+```{r paso0_mi_dls_1_res,eval=T, echo=T, paged.print=TRUE, eval=F}
+cor_table <- residuals(lid_des_fa_3f_inicial, type = "standardized")$cov
+
+cor_table[lower.tri(cor_table)] <- NA # erase the upper triangle
+diag(cor_table) <- NA # erase the diagonal 0's
+
+ knitr::kable(cor_table,digits=2,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S7. Matriz de Residuos de Covarianzas, Modelo de Tres Factores Inicial DLS"),
+               align =c('l',rep('c', 101)))%>%
+kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+ #covarianzas estandarizadas residuales de los ítems, las cuales, según Fernández Aráuz (2015), pueden ser entendidas como “el número de desviaciones estándar por el cual los residuos ajustados difieren de los residuos de valor cero que estarían asociados con un modelo de ajuste perfecto” (p. 58) y, por tanto, pueden generar que se subestime o sobreestime la relación entre los indicadores. Al revisar estos valores, se encontraron valores altos (> 2,56) 
+```
+```{r fig3_dls_polychor, echo=T, fig.align='center', fig.pos='H', fig.cap= "Figura S5. Matriz de correlaciones policóricas para DLS (solución inicial a estudiar)", message=FALSE, error=T, fig.retina=2}
+#matriz policórica
+lides_policor_wgt <- reshape2::melt(as.matrix(psych::polychoric(BD_2020_input[,paste0("lid_des",c(2,6,11,12,13,14,3,5,7,9,1,4,8,10))],global=TRUE,ML=FALSE, std.err=FALSE,weight=BD_2020_input$weight,correct=.5,progress=TRUE,na.rm=TRUE, delete=TRUE)$rho))
+
+ggheatmap_LD <- ggplot(lides_policor_wgt, aes(Var2, Var1, fill = value))+
+  geom_tile(color = "white")+
+  scale_fill_gradient2(low = "red", high = "blue", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Correlación\nPolicórica") +
+  theme_minimal()+ # minimal theme
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.9, 
+                                   size = 10, hjust = .9))+
+  coord_fixed()+
+  scale_x_continuous(breaks = 1:14,
+                     labels = c(paste0("Cons.",c(2,6,11,12,13,14)),
+                                              paste0("LsFr.",c(3,5,7,9)),
+                                              paste0("Aut.",c(1,4,8,10))))+
+  scale_y_continuous(breaks = 1:14,
+                     labels = c(paste0("Cons.",c(2,6,11,12,13,14)),
+                                              paste0("LsFr.",c(3,5,7,9)),
+                                              paste0("Aut.",c(1,4,8,10))))+
+  ylab("")+
+  xlab("")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  labs(caption="Nota. Aut= Liderazgos Autoritarios; LsFr= Liderazgos Laissez-Faire;Cons.= Liderazgos Constructivos")
+print(ggheatmap_LD)
+
+#para obtener los valores P de significación.
+#lides_policor_wgt_2 <- psych::cor.ci(BD_2020_input[c(LID_DES_LC,LID_DES_LF,LID_DES_LT)],
+#                  global=TRUE,ML=FALSE, std.err=FALSE,weight=BD_2020_input$weight, poly=T,
+#                  correct=.5,progress=TRUE,na.rm=TRUE, delete=TRUE)$rho
+#print(psych::corr.test(lides_policor_wgt_2), short=FALSE)  
+```
+
+<br>
+
+Un análisis de la matriz de correlaciones policóricas permite observar que el ítem 3 no presenta correlaciones con el resto de las variables correspondientes a Liderazgo Laissez-Faire.
+
+<br>
+
+Luego, se presentan los índices de modificación al modelo de tres factores. Se examinaron aquellos parámetros de modificación que presentaran un índice de modifcación (MI) mayor a 5 y cambios esperados del parámetro (Expected Parameter Change o SEPC) mayores a 0,2 [@Whittaker2012].
+
+<br>
+
+```{r paso1_mi_dls_1,eval=T, echo=T, paged.print=TRUE, eval=T}
+df_mi_dls_1<-
+  subset(lavaan::modindices(lid_des_fa_3f_inicial)[order(lavaan::modindices(lid_des_fa_3f_inicial)$mi, decreasing=TRUE), ], mi > 5 & abs(sepc.all)>0.2)%>%
+  data.frame()%>%
+  dplyr::mutate(lhs=paste0(lhs,op,rhs))%>%
+  dplyr::mutate(mi=sprintf("%04.2f",mi))%>%
+  dplyr::mutate(sepc.all=sprintf("%04.2f",sepc.all))%>%
+  dplyr::select(lhs,mi,sepc.all)
+  
+  knitr::kable(df_mi_dls_1,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S7. Índices de Modificación, Modelo de Tres Factores Inicial DLS"),
+               align =c('l',rep('c', 101)),
+               col.names = c("Relación entre variables","Índice de Modificación", "Cambio esperado del parámetro Estandarizado (SEPC)"))%>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+    kableExtra::row_spec(which(grepl("lid_des3",df_mi_dls_1$lhs)), bold= T, color= "white", background= "cornflowerblue")%>%
+    kableExtra::row_spec(which(grepl("lid_des13",df_mi_dls_1$lhs)), bold= T, color = "#104e8b", background = "#d3d3d3")%>%
+    kableExtra::row_spec(which(grepl("lid_des2",df_mi_dls_1$lhs)), bold= T, color = "darkolivegreen4", background = "darkseagreen")%>%
+  kableExtra::add_footnote(c("Nota. En color, parámetros a estudiar","=~ : efecto de una variable observada en una variable latente","~~: covarianza entre los errores de dos variables observadas"),
+                            notation = "none")%>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+```
+
+<br>
+
+```{r, echo = FALSE, eval = F}
+"to provide minimum coverage of the construct's theoretical domain" (Hair et al., 2010, pg.676).
+
+A factor with 2 variables is only considered reliable when the variables are highly correlated with each another (r > .70) but fairly uncorrelated with other variables. Yong, A. G., & Pearce, S. (2013, p. 80).
+An item selection procedure to maximise scale reliability and validity
+J. Raubenheimer
+SA Journal of Industrial Psychology | Vol 30, No 4 | a168 | DOI: https://doi.org/10.4102/sajip.v30i4.168 | © 2004 J. Raubenheimer | This work is licensed under CC Attribution 4.0
+Submitted: 26 October 2004 | Published: 26 October 2004
+Bollen (1989) fully and thoroughly discusses the issues of identification of CFA models in chapter 7. See p. 244 specifically regarding three- and two-indicator rules.
+It is recommended that each subscale include at least three items in order to capture the true central
+of each dimension
+<!---
+Uno de los ítems con mayores índices de modificación y que aparece de manera más recurrente fue el ítem 3, que resultó estar empíricamente vinculado a la variable latente Liderazgos Constructivos (LC), e ítems que corresponden a Liderazgos Constructivos, pero también a la variable latente concerniente a Liderazgos Autoritarios (Aut). Por otra parte, también se observa que el ítem 2 mostraría mejores . Con la remoción del ítem 3, 
+Los índices de modificación representan la disminución en el valor de chi-cuadrado que se produciría en caso se realizará lo sugerido. ¿Cómo saber cuando es importante? Va a depender de cada análisis, es distinto un modelo estructural con chi-cuadrado de 1500 de valor que presenta IM de 35 puntos; que un modelo estructural de chi-cuadrado 65 con el mismo valor en IM.
+Esta información se adiciona al “expected parameter change” (epc) y su valor estandarizado (sepc.all) para tener mayor noción del cambio a nivel estadístico que se realizaría.
+Dicho lo anterior verificamos que los IM sugieren que habría un cambio de 36 puntos menos en el chi-cuadrado (valor actual de 85.3) si se modificase su pertenencia al factor visual. Mientras que si se correlaciona los errores del indicador 7 y 8, habría un cambio de 34.15, además de que la correlación sería de 0.86 (sepc.all).
+--->
+```
+
+<br>
+
+A partir de la Tabla S7, se puede observar que una buena parte de los parámetros involucran ítems correspondientes a la escala de Liderazgo Laissez-Faire, dado que los índices más altos muestran un vínculo con él, destacando el ítem 3. 
+
+<br>
+
+Si bien existen otros parámetros que sugieren vínculos con otros ítems de la Escala Laissez-Faire como el ítem 5, 9, y 7, para análisis confirmatorios se decide priorizar el análisis de ítems correspondientes a otros factores, con la finalidad de conservar al menos tres ítem por factor y con ello evitar introducir problemas de identificación del modelo [@Hair2010; @raubenheimerj.2004; @Carpenter2018].
+
+<br>
+
+Otro ítem muy frecuente entre los índices de modificación es el ítem 2, el que mostró una importante proporción de error (36% de la varianza) al interior de la subescala de Liderazgo Constructivo, junto con una importante relación con el ítem 3 y las variables latentes Liderazgo Laissez-Faire y Liderazgo Autoritario/Tiránico. Por último, se eliminó el ítem 13 (“¿Define y explica claramente las tareas que le asigna a usted y a sus compañeros de trabajo?”) el cual mostró altos MI’s.
+
+<br>
+
+Se probó eliminar el ítem 4, el cual también mostró varios y altos índices de modificación (MI’s y SEPC’s), resultando en un modelo en el que se eliminaron los ítems 3, 4 y 13, siendo los ítems que mayores índices de modificación mostraron, pero el ajuste producto de su eliminación terminó siendo comparativamente menor. Por otro lado, se especificó un modelo sin los ítems 2, 3 y 9, pero no mostró mejores índices de ajuste. Por último, también se probó eliminar el ítem 6 y conservar el ítem 2, y que mostró mejores parámetros de ajuste aunque no obtuvo un RMSEA satisfactorio.
+
+<br>
+
+```{r paso1_reesp_modelos_dls_3,eval=T, echo=T, paged.print=TRUE, eval=T}
+mod_lid_des_3f_sin3<-   "LC=~ lid_des2 + lid_des6 +lid_des11 +lid_des12+lid_des13+lid_des14
+LF=~ lid_des5+lid_des7+lid_des9
+LT=~ lid_des1+lid_des4+lid_des8+lid_des10"
+mod_lid_des_3f_sin2_3<-   "LC=~ lid_des6 +lid_des11 +lid_des12+lid_des13+lid_des14
+LF=~ lid_des5+lid_des7+lid_des9
+LT=~ lid_des1+lid_des4+lid_des8+lid_des10"
+mod_lid_des_3f_sin2_3_13<-   "LC=~ lid_des6 +lid_des11 +lid_des12+lid_des14
+LF=~ lid_des5+lid_des7+lid_des9
+LT=~ lid_des1+lid_des4+lid_des8+lid_des10"
+mod_lid_des_2f_sin2_3_13<-   "LC=~ lid_des6 +lid_des11 +lid_des12+lid_des14
+LD=~ lid_des5+lid_des7+lid_des9+lid_des1+lid_des4+lid_des8+lid_des10"
+mod_lid_des_3f_sin2_3_6<-   "LC=~ lid_des11 +lid_des12+lid_des13+lid_des14
+LF=~ lid_des5+lid_des7+lid_des9
+LT=~ lid_des1+lid_des4+lid_des8+lid_des10"
+mod_lid_des_3f_sin2_3_9<-   "LC=~ lid_des6 +lid_des11 +lid_des12+lid_des13+lid_des14
+LF=~ lid_des5+lid_des7
+LT=~ lid_des1+lid_des4+lid_des8+lid_des10"
+mod_lid_des_3f_sin3_13_4<-   "LC=~ lid_des2 + lid_des6 +lid_des11 +lid_des12+lid_des14
+LF=~ lid_des5+lid_des7+lid_des9
+LT=~ lid_des1+lid_des8+lid_des10"
+```
+
+```{r paso2_definir_modelos_lavaan_3,eval=T, echo=T, paged.print=TRUE, eval=T}
+lid_des_fa_3f_sin3<- lavaan::cfa(mod_lid_des_3f_sin3, data = BD_2020_input, ordered=LID_DES[-3], estimator= "WLS", warn = T)
+lid_des_fa_3f_sin2_3<- lavaan::cfa(mod_lid_des_3f_sin2_3, data = BD_2020_input, ordered=LID_DES[-c(2,3)], estimator= "WLS", warn = T)
+lid_des_fa_3f_sin2_3_13<- lavaan::cfa(mod_lid_des_3f_sin2_3_13, data = BD_2020_input, ordered=LID_DES[-c(2,3,13)], estimator= "WLS", warn = T)
+lid_des_fa_2f_sin2_3_13<- lavaan::cfa(mod_lid_des_2f_sin2_3_13, data = BD_2020_input, ordered=LID_DES[-c(2,3,13)], estimator= "WLS", warn = T)
+lid_des_fa_3f_sin2_3_6<- lavaan::cfa(mod_lid_des_3f_sin2_3_6, data = BD_2020_input, ordered=LID_DES[-c(2,3,6)], estimator= "WLS", warn = T)
+lid_des_fa_3f_sin2_3_9<- lavaan::cfa(mod_lid_des_3f_sin2_3_9, data = BD_2020_input, ordered=LID_DES[-c(2,3,9)], estimator= "WLS", warn = T)
+lid_des_fa_3f_sin3_13_4<- lavaan::cfa(mod_lid_des_3f_sin3_13_4, data = BD_2020_input, ordered=LID_DES[-c(3,13,4)], estimator= "WLS", warn = T)
+```
+
+```{r paso3_comp_tab_modelos_res_dls_3,eval=T, echo=T, paged.print=TRUE, eval=T}
+t3_lid_des<-data.table(data.frame(rbind(ajusteAFC(lid_des_fa_3f_sin3),
+                            ajusteAFC(lid_des_fa_3f_sin2_3),
+                            ajusteAFC(lid_des_fa_2f_sin2_3_13),
+                            ajusteAFC(lid_des_fa_3f_sin2_3_13),
+                            ajusteAFC(lid_des_fa_3f_sin2_3_6),
+                            ajusteAFC(lid_des_fa_3f_sin2_3_9),
+                            ajusteAFC(lid_des_fa_3f_sin3_13_4))),keep.rownames = T)%>%
+  dplyr::mutate(rn=c("Tres Factores (ítem 3 eliminado)","Tres Factores (ítem 2 y 3 eliminado)","Dos Factores (ítem 2, 3 y 13 eliminado)","Tres Factores (ítem 2, 3 y 13 eliminado)", "Tres Factores (ítem 2, 3 y 6 eliminado)", "Tres Factores (ítem 2, 3 y 9 eliminado)", "Tres Factores (ítem 3, 4 y 13 eliminado)"))%>%
+  dplyr::select(-Modelo)
+
+  knitr::kable(t3_lid_des,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S8. Comparativo Índices de Ajuste de Modelos Propuestos DLS"),
+               align =c('l',rep('c', 101)),
+               col.names = c("Modelo","gl","WLS X2","CMIN/df","aGFI","GFI", "RMSEA\n[IC 90%]","CFit","CFI","NNFI")) %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10)%>%
+  kableExtra::row_spec(4, bold= T, color= "black", background= "white")%>%
+  #pack_rows("Group 2", 8, 10)
+  kableExtra::pack_rows("Modelos alternativos", 5, 7, label_row_css = "background-color: #666; color: #fff;")%>%
+  kableExtra::add_footnote( c(paste("Nota. Modelo seleccionado en negrita.")), 
+                            notation = "none")
+```
+
+<br>
+
+El detalle del modelo reespecificado se presenta a continaución.
+
+<br>
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:350px; overflow-x: scroll; width:100%">
+```{r paso2_summ_naq_3_fac_final,eval=T, echo=T, paged.print=TRUE, eval=T}
+summary(lid_des_fa_3f_sin2_3_13)
+```
+</div>
+
+```{r fig4_dls, echo=T, fig.align='center', fig.pos='H', fig.cap= "Figura S6. Cargas factoriales estandarizadas y comunalidades para DLS (solución final)", message=FALSE, error=T, fig.retina=2}
+semPlot::semPaths(lid_des_fa_3f_sin2_3_13, residuals=T, what="std", label.cex=1.5, edge.label.cex=1,fade=FALSE,
+                  thresholds = F,
+                  edge.label.position=c(rep(c(0.45,0.55),5),0.45,rep(0.5,16),rep(0.5,15)), #11  it, 
+                  intercepts=F, curveAdjacent = TRUE,title=F, layout="tree3",sizeMan=5, gui = T, allVars = FALSE,cut=1.1,sizeLat=5, edge.color="black",
+                  curvePivot=T,borders=FALSE, edge.width = 0.5, node.width =1, node.height= 1,label.scale=T,curve = 1.5,
+                  nodeLabels=c(paste0("",c(6,11,12,14,5,7,9,1,4,8,10)),"Cons.","LsFr.","Aut."),
+                  mar = c(5.8, 0.8, 7.8, 0.8))
+```
+
+<br>
+
+```{r paso0_mi_dls_3_res,eval=T, echo=T, paged.print=TRUE, eval=F}
+#Finalmente, exploramos los residuos estandarizados, a fin de contrastar si mejoraron una vez eliminados los ítems 2, 3 y 13.
+#
+#<br>
+cor_table <- residuals(lid_des_fa_3f_sin2_3_13, type = "standardized")$cov
+
+cor_table[lower.tri(cor_table)] <- NA # erase the upper triangle
+diag(cor_table) <- NA # erase the diagonal 0's
+
+ knitr::kable(cor_table,digits=2,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S9. Matriz de Residuos de Covarianzas, Modelo de Tres Factores Inicial DLS (ít. 2, 3 y 13 eliminados"),
+               align =c('l',rep('c', 101)))%>%
+kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+ #covarianzas estandarizadas residuales de los ítems, las cuales, según Fernández Aráuz (2015), pueden ser entendidas como “el número de desviaciones estándar por el cual los residuos ajustados difieren de los residuos de valor cero que estarían asociados con un modelo de ajuste perfecto” (p. 58) y, por tanto, pueden generar que se subestime o sobreestime la relación entre los indicadores. Al revisar estos valores, se encontraron valores altos (> 2,56) 
+```
+
+
+# Confiabilidad
+
+<br>
+
+Para el análisis se utilizaron los coeficientes Alfa de Cronbach con las puntuaciones observadas.
+
+<br>
+
+## NAQ-R
+
+```{r paso1_alfa_cronbach_naqr,eval=T, echo=T, paged.print=TRUE, eval=T}
+todos<-data.table(round(psych::alpha(BD_2020_input_num[NAQ_R2],check.keys=TRUE)$ alpha.drop,2),keep.rownames = T)
+tot<-data.table(round(psych::alpha(BD_2020_input_num[NAQ_R2],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Total")
+#RT, AP y AF
+rt<-data.table(round(psych::alpha(BD_2020_input_num[paste0("naq",c(1,3,14,16,18,19,21))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Acoso Rel. con el Trabajo")
+ap<-data.table(round(psych::alpha(BD_2020_input_num[paste0("naq",c(2,4,5,6,7,10,11,12,13,15,17,20))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Acoso Dirigido a la Persona")
+af<-data.table(round(psych::alpha(BD_2020_input_num[paste0("naq",c(8,9,22))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Acoso Físico")
+
+todos%>%
+  dplyr::select(rn, raw_alpha, std.alpha)%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S9. Índices de Confiabilidad, DLS, si se elimina un ítem (Total= ",round(psych::alpha(BD_2020_input_num[paste0("naq",1:22)],check.keys=TRUE)$total$raw_alpha,2),")"),
+               align =c('l',rep('c', 101)),
+               col.names = c("Parámetro","Coeficiente Alfa con las puntuaciones observadas*","Coeficiente alfa con las puntuaciones estandarizadas")) %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+  kableExtra::add_footnote( c(paste("Nota. *Indicador utilizado en los análisis")), 
+                            notation = "none") %>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+```
+<br>
+
+A partir de la Tabla S9, no se presentan ítems cuya eliminación signifiquen un incremento en la puntuación alfa de cronbach.
+
+<br>
+
+```{r paso1b_alfa_cronbach_naqr,eval=T, echo=T, paged.print=TRUE, eval=T}
+rbind(tot, rt, ap, af)%>%
+  dplyr::select(rn, raw_alpha, std.alpha)%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S10. Índices de Confiabilidad, NAQ-R Totales"),
+              align =c('l',rep('c', 101)),
+               col.names = c("Parámetro","Coeficiente Alfa con las puntuaciones observadas*","Coeficiente alfa con las puntuaciones estandarizadas")) %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+  kableExtra::add_footnote( c(paste("Nota. *Indicador utilizado en los análisis")), 
+                            notation = "none")
+```
+
+<br>
+
+Adicionalmente y como medida de sensibilidad, se computó el alfa ordinal de las pruebas y los factores, encontrándose una alta confiabilidad para la prueba NAQ-R (alpha ordinal= `r round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",1:22))$output$dat$alpha.ordinal,2)`). Particularmente, el Acoso Relacionado con el Trabajo obtuvo una alta confiabilidad (alpha ordinal= `r round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(1,3,14,16,18,19,21)))$output$dat$alpha.ordinal,2)`), el Acoso Dirigido a la Persona obtuvo una alta confiabilidad (alpha ordinal= `r round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(2,4,5,6,7,10,11,12,13,15,17,20)))$output$dat$alpha.ordinal,2)`) y el Acoso Físico obtuvo una alta confiabilidad (alpha ordinal= `r round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(8,9,22)))$output$dat$alpha.ordinal,2)`). Ésta última incluso mostró niveles de confiabilidad bastante mayores al coeficiente alfa de cronbach para variables continuas.
+
+<br>
+
+```{r paso3_alfa_cronbach_naq,eval=T, echo=T, paged.print=TRUE, eval=F}
+naq_tot_alfa_ord<-paste0(round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",1:22))$output$dat$alpha.ordinal,2)," [",
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",1:22))$output$dat$alpha.ordinal.ci.lo,2),"-",
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",1:22))$output$dat$alpha.ordinal.ci.hi,2),"]")
+
+naq_rt_alfa_ord<-paste0(round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(1,3,14,16,18,19,21)))$output$dat$alpha.ordinal,2)," [",
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(1,3,14,16,18,19,21)))$output$dat$alpha.ordinal.ci.lo,2),"-"
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(1,3,14,16,18,19,21)))$output$dat$alpha.ordinal.ci.hi,2),"]")
+
+naq_ap_alfa_ord<-paste0(round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(2,4,5,6,7,10,11,12,13,15,17,20)))$output$dat$alpha.ordinal,2)," [",
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(2,4,5,6,7,10,11,12,13,15,17,20)))$output$dat$alpha.ordinal.ci.lo,2),"-",
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(2,4,5,6,7,10,11,12,13,15,17,20)))$output$dat$alpha.ordinal.ci.hi,2),"]")
+
+naq_af_alfa_ord<-paste0(round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(8,9,22)))$output$dat$alpha.ordinal,2)," [",
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(8,9,22)))$output$dat$alpha.ordinal.ci.lo,2),"-",
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(8,9,22)))$output$dat$alpha.ordinal.ci.hi,2),"]")
+
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(8,9,22)))$output$dat$alpha.ordinal,2)
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(2,4,5,6,7,10,11,12,13,15,17,20)))$output$dat$alpha.ordinal,2)
+round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("naq",c(1,3,14,16,18,19,21)))$output$dat$alpha.ordinal,2)
+```
+
+## DLS
+
+```{r paso1_alfa_cronbach_lid_des_original,eval=T, echo=T, paged.print=TRUE, eval=F, warning=F, message=F}
+todos_dls_ini%>%
+  dplyr::select(rn, raw_alpha, std.alpha)%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S11a. Índices de Confiabilidad, DLS, si se elimina un ítem (Total= ",round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(1:14))],check.keys=TRUE)$total$raw_alpha,2),")"),
+               align =c('l',rep('c', 101)),
+               col.names = c("Parámetro","Coeficiente Alfa con las puntuaciones observadas*","Coeficiente alfa con las puntuaciones estandarizadas")) %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+  kableExtra::add_footnote( c(paste("Nota. *Indicador utilizado en los análisis;\nSigno (-), Ítems de Orientación Inversa")), 
+                            notation = "none") %>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+```
+```{r paso1_alfa_cronbach_lid_des,eval=T, echo=T, paged.print=TRUE, eval=T, warning=F, message=F}
+todos_dls_ini<-data.table(round(psych::alpha(BD_2020_input_num[LID_DES],check.keys=TRUE)$ alpha.drop,2),keep.rownames = T)
+tot_ini<-data.table(round(psych::alpha(BD_2020_input_num[LID_DES],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Total DLS (14 ítems)")
+#RT, AP y AF
+lc_ini<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(2,6,11,12,13,14))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Lid. Constructivo")
+lf_ini<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(3,5,7,9))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Lid. Laissez-Faire")
+la<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(1,4,8,10))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Lid. Autoritario")
+
+lc_final<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(6,11,12,14))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Lid. Constructivo (sin ítem 2 y 13)")
+lf_final<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(5,7,9))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Lid. Laissez-Faire (sin ítem 3)")
+
+dls_sin3<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(5,7,9,1,4,8,10))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Lid. Destructivos (sin ítem 3)")
+
+todos_dls_ini<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",1:14)],check.keys=TRUE)$ alpha.drop,2),keep.rownames = T)
+todos_dls_final<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(1,4,8,10,5,7,9,6,11,12,14))],check.keys=TRUE)$ alpha.drop,2),keep.rownames = T)
+
+tot_final<-data.table(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(1,4,8,10,5,7,9,6,11,12,14))],check.keys=TRUE)$ total,2),keep.rownames = T)%>% dplyr::mutate(rn="Total DLS (Sin ítems 2,3 y 13)")
+
+todos_dls_final%>%
+  dplyr::select(rn, raw_alpha, std.alpha)%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S11. Índices de Confiabilidad, DLS (sin ítems 2,3 y 13), si se elimina un ítem (Total= ",round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(1,4,8,10,5,7,9,6,11,12,14))],check.keys=TRUE)$total$raw_alpha,2),")"),
+               align =c('l',rep('c', 101)),
+               col.names = c("Parámetro","Coeficiente Alfa con las puntuaciones observadas*","Coeficiente alfa con las puntuaciones estandarizadas")) %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+  kableExtra::add_footnote( c(paste("Nota. *Indicador utilizado en los análisis;\nSigno (-), Ítems de Orientación Inversa")), 
+                            notation = "none") %>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+```
+
+<br>
+
+A partir de la Tabla S11b, no se presentan ítems cuya eliminación signifiquen un incremento importante en la puntuación alfa de cronbach.
+
+<br>
+
+```{r paso1b_alfa_cronbach_dls,eval=T, echo=T, paged.print=TRUE, eval=T}
+rbind(tot_ini, lc_ini, lf_ini,la, lc_final, lf_final, dls_sin3,tot_final)%>%
+  dplyr::select(rn, raw_alpha, std.alpha)%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla S12. Índices de Confiabilidad, DLS Totales"),
+              align =c('l',rep('c', 101)),
+               col.names = c("Parámetro","Coeficiente Alfa con las puntuaciones observadas*","Coeficiente alfa con las puntuaciones estandarizadas")) %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+  kableExtra::add_footnote( c(paste("Nota. *Indicador utilizado en los análisis")), 
+                            notation = "none")
+```
+
+<br>
+
+Adicionalmente y como medida de sensibilidad, se computó el alfa ordinal de las pruebas y los factores, encontrándose una alta confiabilidad para la prueba DLS (alpha ordinal= `r round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("lid_des",c(1,4,8,10,5,7,9,6,11,12,14)))$output$dat$alpha.ordinal,2)`). Particularmente, el Lid. Constructivo obtuvo una alta confiabilidad (alpha ordinal= `r round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("lid_des",c(6,11,12,14)))$output$dat$alpha.ordinal,2)`), el Lid. Autoritario obtuvo una alta confiabilidad (alpha ordinal= `r round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("lid_des",c(1,4,8,10)))$output$dat$alpha.ordinal,2)`) y el Lid. Laissez-Faire obtuvo una alta confiabilidad (alpha ordinal= `r round(userfriendlyscience::scaleReliability(dat = BD_2020_input, items = paste0("lid_des",c(5,7,9)))$output$dat$alpha.ordinal,2)`). Ésta última incluso mostró niveles de confiabilidad bastante mayores al coeficiente alfa de cronbach para variables continuas.
+
+<br>
+
+# Descripción de Variables Seleccionadas y Recodificadas
+
+<br>
+
+**En primer lugar, se generaron las variables de suma de puntajes dicotomizados, suma de puntajes brutos, entre otras**.
+
+<br>
+
+```{r paso1_asignar_var_factor,eval=T, echo=T, paged.print=TRUE, eval=T}
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_Definir Postestratificación#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+BD_2020_input%>%
+dplyr::mutate_at(.vars= vars(naq1, naq2, naq3,naq4, naq5, naq6, naq7, naq8, naq9, naq10, naq11, naq12, naq13, naq14, naq15, naq16, naq17, naq18, naq19, naq20, naq21, naq22),.funs = ~as.numeric(.)-1)%>%
+  dplyr::mutate_at(.vars= vars(lid_des1, lid_des2, lid_des3,lid_des4, lid_des5, lid_des6, lid_des7, lid_des8, lid_des9, lid_des10, lid_des11, lid_des12, lid_des13, lid_des14),.funs = ~as.numeric(.)-1)%>%
+  
+  dplyr::mutate(lc2 = rowSums(select(., .dots = paste0("lid_des",c(6,11,12,14))),na.rm=T))%>%
+  dplyr::mutate(lf2 = rowSums(select(., .dots = paste0("lid_des",c(5,7,9))),na.rm=T))%>%
+  dplyr::mutate(la = rowSums(select(., .dots = paste0("lid_des",c(1,4,8,10))),na.rm=T))%>%
+  dplyr::mutate(lid_des_sum = rowSums(select(., .dots = paste0("lid_des",c(5,7,9,1,4,8,10))),na.rm=T))%>%
+
+  dplyr::mutate(across(paste0("naq",1:22), ~car::recode(.,"3:4=1;0:2=0"),.names="{col}_rec"))%>%
+  dplyr::mutate(across(paste0("lid_des",c(1,4,5,6,7,8,9,10,11,12,14)), ~car::recode(.,"2:3=1;0:1=0"),.names="{col}_rec"))%>%
+  
+  dplyr::mutate(naq_dic = rowSums(select(., .dots = paste0("naq",1:22,"_rec")),na.rm=T))%>%
+  dplyr::mutate(naq_dic_logit = car::recode(naq_dic,"0=0;1=1;2:hi=2"))%>%
+  dplyr::mutate(naq_dic_autocat = dplyr::case_when(autonaq==2 & naq_dic_logit==2~2,
+                                                   autonaq==2 & naq_dic_logit<2~1,
+                                                   TRUE~0))%>%
+  dplyr::mutate(naq_dic_autocat = as.factor(naq_dic_autocat))%>%
+  dplyr::mutate(naq_sum_cuartil = car::recode(naq_sum,"0:0=0;1:4=1;5:10=2;11:hi=3"))%>%
+  
+  dplyr::mutate(lc_rec = rowSums(select(., .dots = paste0("lid_des",c(6,11,12,14),"_rec")),na.rm=T))%>%
+  dplyr::mutate(lc_rec = car::recode(lc_rec,"4:hi=4"))%>%
+  dplyr::mutate(lc_rec_logit = car::recode(lc_rec,"0=2;1=1;2:hi=0"))%>%
+  
+  dplyr::mutate(lid_des_dic = rowSums(select(., .dots = paste0("lid_des",c(5,7,9,1,4,8,10),"_rec")),na.rm=T))%>%
+  dplyr::mutate(lid_des_dic = car::recode(lid_des_dic,"4:7=4"))%>% #ojo, esto no estaba tan claro en stata
+  dplyr::mutate(lid_des_sum_cuartil = car::recode(lid_des_sum,"0=0;1:2=1;3:4=2;5:hi=3"))%>%
+  dplyr::mutate(lid_des_dic_logit = car::recode(lid_des_dic,"0=0;1=1;2:hi=2"))%>%
+
+  dplyr::mutate(lf_dic = rowSums(select(., .dots = paste0("lid_des",c(5,7,9),"_rec")),na.rm=T))%>%#,1,4,8,10
+  dplyr::mutate(lf_dic = car::recode(lf_dic,"4:7=4"))%>% #ojo, esto no estaba tan claro en stata
+  
+  dplyr::mutate(la_dic = rowSums(select(., .dots = paste0("lid_des",c(1,4,8,10),"_rec")),na.rm=T))%>%#,
+  dplyr::mutate(la_dic = car::recode(la_dic,"4:7=4"))%>% #ojo, esto no estaba tan claro en stata
+  
+  dplyr::mutate(k2_elevado_num = ifelse(as.numeric(k2_elevado)==2,1,0))%>%
+
+dplyr::mutate_at(.vars= vars(naq1, naq2, naq3,naq4, naq5, naq6, naq7, naq8, naq9, naq10, naq11, naq12, naq13, naq14, naq15, naq16, naq17, naq18, naq19, naq20, naq21, naq22),.funs = ~factor(.))%>%
+  dplyr::mutate_at(.vars= vars(lid_des1, lid_des2, lid_des3,lid_des4, lid_des5, lid_des6, lid_des7, lid_des8, lid_des9, lid_des10, lid_des11, lid_des12, lid_des13, lid_des14),.funs = ~factor(.))%>%
+  dplyr::mutate_at(.vars= vars(lc_rec_logit, naq_dic_logit, lid_des_dic_logit, naq_sum_cuartil, lid_des_sum_cuartil),.funs = ~factor(.+1))%>%
+ #janitor::tabyl(la2,la_rec)
+  assign("BD_2020_input",., envir = .GlobalEnv)
+
+invisible(
+ c("lf_rec_logit", "la_rec_logit", "lc_rec_logit", 
+               "naq_dic_logit", "lid_des_dic_logit", 
+               "naq_sum_cuartil", "lid_des_sum_cuartil")
+)
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#Se hace numerica la variable
+#BD_2020_input$k2_elevado_num <- as.numeric(BD_2020_input$k2_elevado == "2")
+
+dsgn_BD_05_02 <- survey::svydesign(ids = ~1, data = BD_2020_input, weights = ~weight)
+
+dsgn_mujer<- subset(BD_2020_input,mujer==1)
+dsgn_hombre<- subset(BD_2020_input,mujer==0)
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+BD_2020_input%>%
+dplyr::mutate_at(.vars= vars(naq1, naq2, naq3,naq4, naq5, naq6, naq7, naq8, naq9, naq10, naq11, naq12, naq13, naq14, naq15, naq16, naq17, naq18, naq19, naq20, naq21, naq22),.funs = ~as.numeric(.)-1)%>%
+  dplyr::mutate_at(.vars= vars(lid_des1, lid_des2, lid_des3,lid_des4, lid_des5, lid_des6, lid_des7, lid_des8, lid_des9, lid_des10, lid_des11, lid_des12, lid_des13, lid_des14),.funs = ~as.numeric(.)-1)%>%
+    dplyr::mutate_at(.vars= vars(a47_top_1, a47_top_2, a47_top_3,a47_top_4, a47_top_5, a47_top_6),.funs = ~as.numeric(.)-1)%>%
+  assign("BD_2020_input_num",., envir = .GlobalEnv)
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+n<- c("naq_sum", "naq_r_ap_sum", "naq_r_rt_sum", "naq_r_af_sum", "lc2","la", "lf2", "lid_des_sum", "k6_2")
+desc<-data.frame()
+for (i in c("naq_sum", "naq_r_ap_sum", "naq_r_rt_sum", 
+            "naq_r_af_sum", "lc2","la", "lf2", 
+            "lid_des_sum", "k6_2")) {
+  dat<- data.frame("M (DE)"= paste0(round(unlist(svymean(as.formula(paste0("~",i)),dsgn_BD_05_02,na.rm=T))[1],2)," (",
+                                                         sprintf("%4.2f",round(Weighted.Desc.Stat::w.sd(BD_2020_input[i], BD_2020_input$weight),2)),")")                                        )
+  desc<- rbind(desc, dat)
+}
+desc<-
+desc%>%
+  dplyr::mutate(Variable=c("Suma de puntajes brutos NAQ-R",
+                      "Suma de puntajes brutos Acoso dirigido a la Persona",
+                      "Suma de puntajes brutos Rel. con el Trabajo",
+                      "Suma de puntajes brutos Acoso Físico",
+                      "Suma de puntajes brutos Lid. Constructivo (ít. 6,11,12 & 14)",
+                      "Suma de puntajes brutos Lid. Autoritario (ít. 1,4,8 & 10)",
+                      "Suma de puntajes brutos Lid. Laissez-Faire (ít. 5,7 & 9)",
+                      "Suma de puntajes brutos Lid. Destructivos (ít. 5,7,9,1,4,8 & 10)",
+                      "Suma de puntajes brutos Distrés Psicológico"))%>%
+  dplyr::select(Variable,everything())
+
+#pearson
+set.seed(123)
+cor_wtd<-svycor(~naq_sum+ naq_r_ap_sum+ naq_r_rt_sum+ naq_r_af_sum+ lc2+la+ lf2+ lid_des_sum+ k6_2
+, design = dsgn_BD_05_02, digits = 2, sig.stats = TRUE, bootn = 10000, mean1 = TRUE)
+
+cor_wtd_sig<-
+data.frame(cbind(cor=data.table(round(matrix(cor_wtd$cors),2)),
+p=data.table(matrix(cor_wtd$p.values))))%>%
+  dplyr::rename("cor"="cor.V1","p"="p.V1")%>%
+  dplyr::mutate(cor=dplyr::case_when(p<.001~paste0(sprintf("%4.2f",cor),"***"),
+                    p<.01~paste0(sprintf("%4.2f",cor),"**"),
+                    p<.05~paste0(sprintf("%4.2f",cor),"*"),
+                    TRUE~paste0(sprintf("%4.2f",cor))))%>%
+  dplyr::mutate(cor=ifelse(grepl("1.00",cor),"",cor))%>%
+  dplyr::select(-p)
+
+pearson<-
+data.frame(Vars=cbind(c("naq_sum", "naq_r_ap_sum", "naq_r_rt_sum", "naq_r_af_sum", "lc2","la", "lf2", "lid_des_sum", "k6_2"),
+      `1`=cor_wtd_sig[1:length(n),],
+      `2`=cor_wtd_sig[(length(n)*1)+1:(length(n)*1),],
+      `3`=cor_wtd_sig[(length(n)*2)+1:(length(n)*1),],
+      `4`=cor_wtd_sig[(length(n)*3)+1:(length(n)*1),],
+      `5`=cor_wtd_sig[(length(n)*4)+1:(length(n)*1),],
+      `6`=cor_wtd_sig[(length(n)*5)+1:(length(n)*1),],
+      `7`=cor_wtd_sig[(length(n)*6)+1:(length(n)*1),],
+      `8`=cor_wtd_sig[(length(n)*7)+1:(length(n)*1),],
+      `9`=cor_wtd_sig[(length(n)*8)+1:(length(n)*1),]))
+
+alfas<-c(as.numeric(round(psych::alpha(BD_2020_input_num[paste0("naq",1:22)],check.keys=TRUE)$total$raw_alpha,2)),
+      as.numeric(round(psych::alpha(BD_2020_input_num[paste0("naq",c(2,4,5,6,7,10,11,12,13,15,17,20))],check.keys=TRUE)$total$raw_alpha,2)),
+      as.numeric(round(psych::alpha(BD_2020_input_num[paste0("naq",c(1,3,14,16,18,19,21))],check.keys=TRUE)$total$raw_alpha,2)),
+      as.numeric(round(psych::alpha(BD_2020_input_num[paste0("naq",c(8,9,22))],check.keys=TRUE)$total$raw_alpha,2)),
+      as.numeric(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(6,11,12,14))],check.keys=TRUE)$total$raw_alpha,2)),
+      as.numeric(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(1,4,8,10))],check.keys=TRUE)$total$raw_alpha,2)),
+      as.numeric(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(5,7,9))],check.keys=TRUE)$total$raw_alpha,2)),
+      as.numeric(round(psych::alpha(BD_2020_input_num[paste0("lid_des",c(5,7,9,1,4,8,10))],check.keys=TRUE)$total$raw_alpha,2)),
+      as.numeric(round(psych::alpha(BD_2020_input_num[paste0("a47_top_",1:6)],check.keys=TRUE)$total$raw_alpha,2))
+                 )
+
+for (i in (1:length(alfas))){
+      pearson[i,colnames(pearson)[2:length(colnames(pearson))][i]]<-sprintf("%4.2f",alfas[i])
+}
+
+data.frame(cbind(desc,pearson[-1]))%>%
+  dplyr::select_all(~gsub("^Vars", "", .))%>%
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ",", big.mark = "."),
+               caption = paste0("Tabla S13. Resumen de Variables Seleccionadas, Suma de Ítems (Ponderada)"),
+               col.names = c("Variable","M (DE)",  paste0(1:9)))%>%
+      kableExtra::add_footnote(c("Nota. Alfa de cronbach en diagonal"), 
+                            notation = "none")%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10)%>%
+  kableExtra::scroll_box(width = "100%", height = "375px")
+```
+
+<br>
+
+Usando el criterio Leymann [-@Leymann1990], resultó más prevalente el Lid. Constructivo (`r scales::percent(sum(round(prop.table(svytable(~lc_rec_logit, dsgn_BD_05_02)),3)[1:2],na.rm=T))`), seguido por Laissez-Faire (`r scales::percent(sum(round(prop.table(svytable(~lf_dic, dsgn_BD_05_02)),3)[2:5],na.rm=T))`), y Autoritario (`r scales::percent(sum(round(prop.table(svytable(~la_dic, dsgn_BD_05_02)),3)[2:5]))`). Usando el criterio estricto propuesto por Mikkelsen & Einarsen [-@Mikkelsen2001], el porcentaje de trabajadores(as) que reportan acoso es de `r scales::percent(sum(round(prop.table(svytable(~naq_dic_logit, dsgn_BD_05_02)),3)[3:10],na.rm=T))`, mientras que quienes se identifican como acosados una vez presentada una definición de acoso laboral es de `r scales::percent(sum(round(prop.table(svytable(~autonaq, dsgn_BD_05_02)),3)[2:4],na.rm=T))`. Por último, quienes se identifican como acosados y a la vez dos o más conductas de acoso es de `r scales::percent(sum(round(prop.table(svytable(~naq_dic_autocat, dsgn_BD_05_02)),3)[3:4],na.rm=T))`.
+
+<br>
+
+# Asociaciones con Distrés (Razón de Prevalencia)
+
+Después de recodificar las variables de acuerdo a las reespecificaciones al instrumento DLS, indagamos en las asociaciones entre conductas negativas y estilos de liderazgo.
+
+<br>
+
+```{r paso2a_pr_raw,eval=T, echo=T, paged.print=TRUE, eval=T}
+# CREA LA VARIABLE CON EL AJUSTE DEL MODELO CRUDO
+options(knitr.kable.NA = '')
+PRraw<-data.table()
+for(scale in  c("k2_elevado_num")){
+  for(var in c("naq_dic_logit", 
+                "lc_rec_logit", "lid_des_dic_logit",
+               "naq_sum_cuartil", "lid_des_sum_cuartil","naq_dic_autocat")){
+    # dynamically generate formula
+    fmla <- as.formula(paste0(scale, " ~ ", factor(var)))
+    
+    # fit glm model
+    assign(paste0("svyglm_",as.character(scale),"_",as.character(var)), svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log)))
+    fit <- svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+    #print(round(Epi::ci.lin(fit, Exp=T),3))
+    PRraw<- rbind(PRraw,paste0("svyglm2_",as.character(scale),"_",as.character(var)),data.table(data.table(round(Epi::ci.lin(fit, Exp=T),3),keep.rownames = T)), fill=T)
+  }
+}
+PRraw_mod<-
+PRraw%>%
+  dplyr::rename("Modelo"="x","Categoría"="rn")%>%
+    dplyr::mutate(Modelo=dplyr::case_when(grepl("lf_rec",Modelo)~"Suma dicotomizada de Liderazgos Laissez-Faire",
+                                        grepl("la_rec",Modelo)~"Suma dicotomizada de Liderazgos Autoritarios",
+                                        grepl("lc_rec",Modelo)~"Suma dicotomizada de Liderazgos Constructivos",
+                                        grepl("naq_dic_logit",Modelo)~"Suma dicotomizada de Conductas Negativas",
+                                        grepl("lid_des_dic",Modelo)~"Suma dicotomizada de Liderazgos Destructivos",
+                                        grepl("naq_sum_cuartil",Modelo)~"Suma de puntajes brutos de Conductas Negativas (en cuartiles)",
+                                        grepl("lid_des_sum_cuartil",Modelo)~"Suma de puntajes brutos de Conductas Negativas (en cuartiles)",
+                                        grepl("naq_dic_autocat",Modelo)~"Combinación de Autodefinición y Reporte Conductas Negativas",
+                                        TRUE~Modelo))%>%
+  data.frame()%>%
+  dplyr::filter(!grepl("(Intercept)",Categoría))%>%
+  dplyr::mutate(Categoría=dplyr::case_when(grepl("lf_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("lf_rec_logit3",Categoría)~"2 o más",
+                                           grepl("la_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("la_rec_logit3",Categoría)~"2 o más",
+                                           grepl("lc_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("lc_rec_logit3",Categoría)~"Ausencia conductas",
+                                           grepl("naq_dic_logit2",Categoría)~"1 conducta",
+                                           grepl("naq_dic_logit3",Categoría)~"2 o más",
+                                           grepl("lid_des_dic_logit2",Categoría)~"1 conducta",
+                                           grepl("lid_des_dic_logit3",Categoría)~"2 o más",
+                                           grepl("naq_sum_cuartil2",Categoría)~"1-4 puntos",
+                                           grepl("naq_sum_cuartil3",Categoría)~"5-10 puntos",
+                                           grepl("naq_sum_cuartil4",Categoría)~"11 o más",
+                                           grepl("lid_des_sum_cuartil2",Categoría)~"1-2 puntos",
+                                           grepl("lid_des_sum_cuartil3",Categoría)~"3-4 puntos",
+                                           grepl("lid_des_sum_cuartil4",Categoría)~"5 o más",
+                                           grepl("naq_dic_autocat1",Categoría)~"Autodefinición",
+                                           grepl("naq_dic_autocat2",Categoría)~"Autodefinición y 2 o más conductas"))%>%
+  dplyr::mutate(`exp.Est..`=sprintf("%04.2f",`exp.Est..`))%>%
+  dplyr::mutate(`exp.Est..`= ifelse(grepl("NA",`exp.Est..`),NA_character_,`exp.Est..`))%>%
+  dplyr::mutate(PRraw=`exp.Est..`)%>%
+  dplyr::mutate(PRraw=dplyr::case_when(P<.001~paste0(PRraw,"***"),P<.01~paste0(PRraw,"**"),P<.05~paste0(PRraw,"*"),TRUE~PRraw))%>%
+  dplyr::mutate(`X2.5.`= sprintf("%04.2f",`X2.5.`))%>%
+  dplyr::mutate(`X97.5.`=sprintf("%04.2f",`X97.5.`))%>%
+  dplyr::mutate("95% IC"=paste0("[",`X2.5.`,"-",`X97.5.`,"]"))%>%
+  dplyr::mutate("95% IC"= ifelse(grepl("NA]",`95% IC`),NA_character_,`95% IC`))%>%
+  dplyr::select(Modelo,Categoría,PRraw, "95% IC")
+```
+
+```{r paso2b_pr1,eval=T, echo=T, paged.print=TRUE, eval=T}
+# CREA LA VARIABLE CON EL AJUSTE DEL MODELO, MAS VAR. GENERO
+PR1<-data.table()
+for(scale in  c("k2_elevado_num")){
+for(var in c("naq_dic_logit", 
+                "lc_rec_logit", "lid_des_dic_logit",
+               "naq_sum_cuartil", "lid_des_sum_cuartil","naq_dic_autocat")){
+    # dynamically generate formula
+    fmla <- as.formula(paste0(scale, " ~ ", factor(var), "+ mujer + climasex"))
+    
+    # fit glm model
+    assign(paste0("svyglm2_",as.character(scale),"_",as.character(var)), svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log)))
+    fit <- svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+    #print(round(Epi::ci.lin(fit, Exp=T),3))
+    PR1<- rbind(PR1,paste0("svyglm2_",as.character(scale),"_",as.character(var)),data.table(data.table(round(Epi::ci.lin(fit, Exp=T),3),keep.rownames = T)), fill=T)
+  }
+}
+
+PR1_mod<-
+PR1%>%
+  dplyr::rename("Modelo"="x","Categoría"="rn")%>%
+    dplyr::mutate(Modelo=dplyr::case_when(grepl("lf_rec",Modelo)~"Suma dicotomizada de Liderazgos Laissez-Faire",
+                                        grepl("la_rec",Modelo)~"Suma dicotomizada de Liderazgos Autoritarios",
+                                        grepl("lc_rec",Modelo)~"Suma dicotomizada de Liderazgos Constructivos",
+                                        grepl("naq_dic_logit",Modelo)~"Suma dicotomizada de Conductas Negativas",
+                                        grepl("lid_des_dic",Modelo)~"Suma dicotomizada de Liderazgos Destructivos",
+                                        grepl("naq_sum_cuartil",Modelo)~"Suma de puntajes brutos de Conductas Negativas (en cuartiles)",
+                                        grepl("lid_des_sum_cuartil",Modelo)~"Suma de puntajes brutos de Conductas Negativas (en cuartiles)",
+                                        grepl("naq_dic_autocat",Modelo)~"Combinación de Autodefinición y Reporte Conductas Negativas",
+                                        TRUE~Modelo))%>%
+  data.frame()%>%
+  dplyr::filter(!grepl("(Intercept)",Categoría))%>%
+  dplyr::mutate(Categoría=dplyr::case_when(grepl("lf_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("lf_rec_logit3",Categoría)~"2 o más",
+                                           grepl("la_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("la_rec_logit3",Categoría)~"2 o más",
+                                           grepl("lc_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("lc_rec_logit3",Categoría)~"Ausencia conductas",
+                                           grepl("naq_dic_logit2",Categoría)~"1 conducta",
+                                           grepl("naq_dic_logit3",Categoría)~"2 o más",
+                                           grepl("lid_des_dic_logit2",Categoría)~"1 conducta",
+                                           grepl("lid_des_dic_logit3",Categoría)~"2 o más",
+                                           grepl("naq_sum_cuartil2",Categoría)~"1-4 puntos",
+                                           grepl("naq_sum_cuartil3",Categoría)~"5-10 puntos",
+                                           grepl("naq_sum_cuartil4",Categoría)~"11 o más",
+                                           grepl("lid_des_sum_cuartil2",Categoría)~"1-2 puntos",
+                                           grepl("lid_des_sum_cuartil3",Categoría)~"3-4 puntos",
+                                           grepl("lid_des_sum_cuartil4",Categoría)~"5 o más",
+                                           grepl("naq_dic_autocat1",Categoría)~"Autodefinición",
+                                           grepl("naq_dic_autocat2",Categoría)~"Autodefinición y 2 o más conductas"))%>%
+  dplyr::filter(grepl("*",`Categoría`)|grepl("*",`Modelo`))%>%
+  dplyr::mutate(`exp.Est..`=sprintf("%04.2f",`exp.Est..`))%>%
+  dplyr::mutate(`exp.Est..`= ifelse(grepl("NA",`exp.Est..`),NA_character_,`exp.Est..`))%>%
+  dplyr::mutate(PR1=`exp.Est..`)%>%
+  dplyr::mutate(PR1=dplyr::case_when(P<.001~paste0(PR1,"***"),P<.01~paste0(PR1,"**"),P<.05~paste0(PR1,"*"),TRUE~PR1))%>%
+  dplyr::mutate(`X2.5.`= sprintf("%04.2f",`X2.5.`))%>%
+  dplyr::mutate(`X97.5.`=sprintf("%04.2f",`X97.5.`))%>%
+  dplyr::mutate("95% IC"=paste0("[",`X2.5.`,"-",`X97.5.`,"]"))%>%
+  dplyr::mutate("95% IC"= ifelse(grepl("NA]",`95% IC`),NA_character_,`95% IC`))%>%
+  dplyr::select(Modelo,Categoría,PR1, "95% IC")
+```
+
+```{r paso2b_pr2,eval=T, echo=T, paged.print=TRUE, eval=T}
+# CREA LA VARIABLE CON EL AJUSTE DEL MODELO, MAS VAR. GENERO Y PREC
+PR2<-data.table()
+for(scale in  c("k2_elevado_num")){
+for(var in c("naq_dic_logit", 
+                "lc_rec_logit", "lid_des_dic_logit",
+               "naq_sum_cuartil", "lid_des_sum_cuartil", "naq_dic_autocat")){
+    # dynamically generate formula
+    fmla <- as.formula(paste0(scale, " ~ ", factor(var), "+ mujer + climasex + precr1+ zona"))
+    
+    # fit glm model
+    assign(paste0("svyglm3_",as.character(scale),"_",as.character(var)), svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log)))
+    fit <- svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+    #print(round(Epi::ci.lin(fit, Exp=T),3))
+    PR2<- rbind(PR2,paste0("svyglm2_",as.character(scale),"_",as.character(var)),data.table(data.table(round(Epi::ci.lin(fit, Exp=T),3),keep.rownames = T)), fill=T)
+  }
+}
+
+PR2_mod<-
+PR2%>%
+  dplyr::rename("Modelo"="x","Categoría"="rn")%>%
+  data.frame()%>%
+  dplyr::mutate(Modelo=dplyr::case_when(grepl("lf_rec",Modelo)~"Suma dicotomizada de Liderazgos Laissez-Faire",
+                                        grepl("la_rec",Modelo)~"Suma dicotomizada de Liderazgos Autoritarios",
+                                        grepl("lc_rec",Modelo)~"Suma dicotomizada de Liderazgos Constructivos",
+                                        grepl("naq_dic_logit",Modelo)~"Suma dicotomizada de Conductas Negativas",
+                                        grepl("lid_des_dic",Modelo)~"Suma dicotomizada de Liderazgos Destructivos",
+                                        grepl("naq_sum_cuartil",Modelo)~"Suma de puntajes brutos de Conductas Negativas (en cuartiles)",
+                                        grepl("lid_des_sum_cuartil",Modelo)~"Suma de puntajes brutos de Conductas Negativas (en cuartiles)",
+                                        grepl("naq_dic_autocat",Modelo)~"Combinación de Autodefinición y Reporte Conductas Negativas",
+                                        TRUE~Modelo))%>%
+  
+  dplyr::filter(!grepl("(Intercept)",Categoría))%>%
+  dplyr::mutate(Categoría=dplyr::case_when(grepl("lf_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("lf_rec_logit3",Categoría)~"2 o más",
+                                           grepl("la_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("la_rec_logit3",Categoría)~"2 o más",
+                                           grepl("lc_rec_logit2",Categoría)~"1 conducta",
+                                           grepl("lc_rec_logit3",Categoría)~"Ausencia conductas",
+                                           grepl("naq_dic_logit2",Categoría)~"1 conducta",
+                                           grepl("naq_dic_logit3",Categoría)~"2 o más",
+                                           grepl("lid_des_dic_logit2",Categoría)~"1 conducta",
+                                           grepl("lid_des_dic_logit3",Categoría)~"2 o más",
+                                           grepl("naq_sum_cuartil2",Categoría)~"1-4 puntos",
+                                           grepl("naq_sum_cuartil3",Categoría)~"5-10 puntos",
+                                           grepl("naq_sum_cuartil4",Categoría)~"11 o más",
+                                           grepl("lid_des_sum_cuartil2",Categoría)~"1-2 puntos",
+                                           grepl("lid_des_sum_cuartil3",Categoría)~"3-4 puntos",
+                                           grepl("lid_des_sum_cuartil4",Categoría)~"5 o más",
+                                           grepl("naq_dic_autocat1",Categoría)~"Autodefinición",
+                                           grepl("naq_dic_autocat2",Categoría)~"Autodefinición y 2 o más conductas"))%>%
+  dplyr::filter(grepl("*",`Categoría`)|grepl("*",`Modelo`))%>%
+  dplyr::mutate(`exp.Est..`=sprintf("%04.2f",`exp.Est..`))%>%
+  dplyr::mutate(`exp.Est..`= ifelse(grepl("NA",`exp.Est..`),NA_character_,`exp.Est..`))%>%
+  dplyr::mutate(PR2=`exp.Est..`)%>%
+  dplyr::mutate(PR2=dplyr::case_when(P<.001~paste0(PR2,"***"),P<.01~paste0(PR2,"**"),P<.05~paste0(PR2,"*"),TRUE~PR2))%>%
+  dplyr::mutate(`X2.5.`= sprintf("%04.2f",`X2.5.`))%>%
+  dplyr::mutate(`X97.5.`=sprintf("%04.2f",`X97.5.`))%>%
+  dplyr::mutate("95% IC"=paste0("[",`X2.5.`,"-",`X97.5.`,"]"))%>%
+  dplyr::mutate("95% IC"= ifelse(grepl("NA]",`95% IC`),NA_character_,`95% IC`))%>%
+  dplyr::select(Modelo,Categoría,PR2, "95% IC")
+```
+
+````{r alt_autonaq, eval=F}
+fmla <- as.formula(paste0(scale, " ~ ", factor("naq_dic_autocat"), ""))
+fmla1 <- as.formula(paste0(scale, " ~ ", factor("naq_dic_autocat"), "+ mujer + climasex"))
+fmla2 <- as.formula(paste0(scale, " ~ ", factor("naq_dic_autocat"), "+ mujer + climasex + precr1+ zona"))
+PR_alt<-data.frame()    
+    # fit glm model
+    assign(paste0("svyglm_","k2_elevado_num","_","naq_dic_autocat"), svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log)))
+    fit <- svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+    PR_alt<- rbind(PR_alt,paste0("svyglm2_","k2_elevado_num","_","naq_dic_autocat"),data.table(data.table(round(Epi::ci.lin(fit, Exp=T),3),keep.rownames = T)), fill=T)
+    assign(paste0("svyglm2_","k2_elevado_num","_","naq_dic_autocat"), svyglm(fmla1, design=dsgn_BD_05_02, family=quasipoisson(link=log)))
+    fit <- svyglm(fmla1, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+    PR_alt<- rbind(PR_alt,paste0("svyglm2_","k2_elevado_num","_","naq_dic_autocat"),data.table(data.table(round(Epi::ci.lin(fit, Exp=T),3),keep.rownames = T)), fill=T)
+    assign(paste0("svyglm3_","k2_elevado_num","_","naq_dic_autocat"), svyglm(fmla2, design=dsgn_BD_05_02, family=quasipoisson(link=log)))
+    fit <- svyglm(fmla2, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+    #print(round(Epi::ci.lin(fit, Exp=T),3))
+    PR_alt<- rbind(PR_alt,paste0("svyglm2_","k2_elevado_num","_","naq_dic_autocat"),data.table(data.table(round(Epi::ci.lin(fit, Exp=T),3),keep.rownames = T)), fill=T)
+    
+PR_alt_mod<-  
+    PR_alt%>%
+      dplyr::filter(grepl("naq_dic_autocat",rn))%>%
+      dplyr::mutate(`exp(Est.)`=sprintf("%04.2f",as.numeric(`exp(Est.)`)))%>%
+      dplyr::mutate(PR2=`exp(Est.)`)%>%
+      dplyr::mutate(PR2=dplyr::case_when(P<.001~paste0(PR2,"***"),P<.01~paste0(PR2,"**"),P<.05~paste0(PR2,"*"),TRUE~PR2))%>%
+      dplyr::mutate(`2.5%`= sprintf("%04.2f",as.numeric(`2.5%`)))%>%
+      dplyr::mutate(`97.5%`=sprintf("%04.2f",as.numeric(`97.5%`)))%>%
+      dplyr::mutate("95% IC"=paste0("[",`2.5%`,"-",`97.5%`,"]"))%>%
+      dplyr::mutate("95% IC"= ifelse(grepl("NA]",`95% IC`),NA_character_,`95% IC`))%>%
+      dplyr::select(PR2,`95% IC`)
+PR_alt_mod2<-  
+data.frame(rbind(cbind(`Categoría`="Autodefinición NAQ-R(1)", cbind(PR_alt_mod[2,],PR_alt_mod[4,],PR_alt_mod[6,])),
+           cbind(`Categoría`="Autodefinición NAQ-R(2)", cbind(PR_alt_mod[3,],PR_alt_mod[5,],PR_alt_mod[7,]))))
+```
+
+```{r modelos_juntos_pr_raw_pr1_pr2,eval=T, echo=T, paged.print=TRUE, eval=T, include=T}
+pr_total_para_exp<-
+data.frame(cbind.data.frame(data.table(PRraw_mod),data.table(PR1_mod),data.table(PR2_mod)))%>%
+  dplyr::select(-Categoría.1,-Categoría.2,-Modelo.1,-Modelo.2)%>%
+  dplyr::rename("95% IC"="X95..IC","95% IC."="X95..IC.1","95% IC,"="X95..IC.2")
+#copiar_nombres(pr_total_para_exp)
+
+pr_total_para_exp%>%
+knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+    caption = paste0("Tabla S14. Razón de Prevalencia, Asociación con Distrés Psicológico"),
+    align =c('l',rep('c', 101)))%>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 10) %>%
+    kableExtra::add_footnote( c("PRraw= Modelo Crudo","PR1= Modelo Ajustado por Sexo y Clima Sexista","PR2= Modelo Ajustado por Sexo, Clima Sexista, Precariedad y Zona Residencial Metropolitana"), 
+    notation = "none") %>%
+    kableExtra::scroll_box(width = "100%", height = "375px")
+```
+```{r ajuste_modelos,eval=T, echo=T, paged.print=TRUE, eval=F}
+#CREAR LOS RESULTADOS DE AJUSTE DEL MODELO EN PARTICULAR
+results2<-data.frame() 
+for(scale in  c("k2_elevado_num")){
+  for(var in c("lc_rec_logit", 
+               "naq_dic_logit", "lid_des_dic_logit", 
+               "naq_sum_cuartil", "lid_des_sum_cuartil")){
+    # dynamically generate formula
+    fmla <- as.formula(paste0(scale, " ~ ", var))
+    fmla2 <- as.formula(paste0(" ~ ", var))
+    
+    # fit glm model
+    fit <- svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+    cfit<-  matrix(round(Epi::ci.lin(fit, Exp=T),3))
+
+    # create temporary data frame
+    df <- cbind(model_name= as.character(paste0(scale,"-",var)),
+                round(cbind(LRT_chi2= survey::regTermTest(fit, fmla2, method=c("LRT"))$chisq,
+                            LRT_ddf= survey::regTermTest(fit, fmla2, method=c("LRT"))$ddf,
+                            LRT_df= survey::regTermTest(fit, fmla2, method=c("LRT"))$df,
+                            LRT_p= survey::regTermTest(fit, fmla2, method=c("LRT"))$p,
+                            f= survey::regTermTest(fit, fmla2, method=c("Wald"))$Ftest,
+                            Wald_ddf= survey::regTermTest(fit, fmla2, method=c("Wald"))$ddf,
+                            Wald_df= survey::regTermTest(fit, fmla2, method=c("Wald"))$df,
+                            f_p= survey::regTermTest(fit, fmla2, method=c("Wald"))$p),3))
+    # bind rows of temporary data frame to the results data frame
+    results2 <- rbind(results2, df)
+  }
+}
+#mas controlando por género
+for(scale in  c("k2_elevado_num")){
+  for(var in c("lf_rec_logit", "la_rec_logit", "lc_rec_logit", 
+               "naq_dic_logit", "lid_des_dic_logit", 
+               "naq_sum_cuartil", "lid_des_sum_cuartil")){
+    # dynamically generate formula
+    fmla <- as.formula(paste0(scale, " ~ ", factor(var), "+ mujer + climasex"))
+    fmla2 <- as.formula(paste0(" ~ ", factor(var), "+ mujer + climasex"))
+    
+    # fit glm model
+    fit <- svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+
+        # create temporary data frame
+    df <- cbind(model_name= paste0(scale, " ~ ", factor(var), "+ mujer + climasex") ,
+                  round(cbind(LRT_chi2= survey::regTermTest(fit, fmla2, method=c("LRT"))$chisq,
+                      LRT_ddf= survey::regTermTest(fit, fmla2, method=c("LRT"))$ddf,
+                      LRT_df= survey::regTermTest(fit, fmla2, method=c("LRT"))$df,
+                      LRT_p= survey::regTermTest(fit, fmla2, method=c("LRT"))$p,
+                      Wald_F= survey::regTermTest(fit, fmla2, method=c("Wald"))$Ftest,
+                      Wald_ddf= survey::regTermTest(fit, fmla2, method=c("Wald"))$ddf,
+                      Wald_df= survey::regTermTest(fit, fmla2, method=c("Wald"))$df,
+                      Wald_p= survey::regTermTest(fit, fmla2, method=c("Wald"))$p),3))
+    # bind rows of temporary data frame to the results data frame
+    results2 <- rbind(results2, df)
+  }
+}
+
+#mas controlando por género
+for(scale in  c("k2_elevado_num")){
+  for(var in c("lf_rec_logit", "la_rec_logit", "lc_rec_logit", 
+               "naq_dic_logit", "lid_des_dic_logit", 
+               "naq_sum_cuartil", "lid_des_sum_cuartil")){
+    # dynamically generate formula
+    fmla <- as.formula(paste0(scale, " ~ ", factor(var), "+ mujer + climasex + precr1 + zona"))
+    fmla2 <- as.formula(paste0(" ~ ", factor(var), "+ mujer + climasex + precr1 + zona"))
+    
+    # fit glm model
+    fit <- svyglm(fmla, design=dsgn_BD_05_02, family=quasipoisson(link=log))
+    
+    # create temporary data frame
+    df <- cbind(model_name= paste0(scale, " ~ ", factor(var), "+ mujer + climasex + prec") ,
+                round(cbind(LRT_chi2= survey::regTermTest(fit, fmla2, method=c("LRT"))$chisq,
+                            LRT_ddf= survey::regTermTest(fit, fmla2, method=c("LRT"))$ddf,
+                            LRT_df= survey::regTermTest(fit, fmla2, method=c("LRT"))$df,
+                            LRT_p= survey::regTermTest(fit, fmla2, method=c("LRT"))$p,
+                            Wald_F= survey::regTermTest(fit, fmla2, method=c("Wald"))$Ftest,
+                            Wald_ddf= survey::regTermTest(fit, fmla2, method=c("Wald"))$ddf,
+                            Wald_df= survey::regTermTest(fit, fmla2, method=c("Wald"))$df,
+                            Wald_p= survey::regTermTest(fit, fmla2, method=c("Wald"))$p),3))
+    # bind rows of temporary data frame to the results data frame
+    results2 <- rbind(results2, df)
+  }
+}
+
+colnames(results2)[6]<- "Wald_F"
+colnames(results2)[9]<- "Wald_p"
+
+#exportar tabla
+copiar_nombres2(results2)
+
+#hago un ejemplo para ver cuánto fifiere yn cálculo de otro.
+
+#IMPORTANTÍSIMO, para probar que haya hecho bien las fórmulas
+round(cbind(LRT_chi2= survey::regTermTest(svyglm3_tenpsi_NAQ_Dic_logit, ~~ NAQ_Dic_logit+ mujer + climasex + precr1 + zona, method=c("LRT"))$chisq,
+      LRT_ddf= survey::regTermTest(svyglm3_tenpsi_NAQ_Dic_logit, ~~ NAQ_Dic_logit+ mujer + climasex + precr1 + zona, method=c("LRT"))$ddf,
+      LRT_df= survey::regTermTest(svyglm3_tenpsi_NAQ_Dic_logit, ~~ NAQ_Dic_logit+ mujer + climasex + precr1 + zona, method=c("LRT"))$df,
+      LRT_p= survey::regTermTest(svyglm3_tenpsi_NAQ_Dic_logit, ~~ NAQ_Dic_logit+ mujer + climasex + precr1 + zona, method=c("LRT"))$p,
+      Wald_F= survey::regTermTest(svyglm3_tenpsi_NAQ_Dic_logit, ~~ NAQ_Dic_logit+ mujer + climasex + precr1 + zona, method=c("Wald"))$Ftest,
+      Wald_ddf= survey::regTermTest(svyglm3_tenpsi_NAQ_Dic_logit, ~~ NAQ_Dic_logit+ mujer + climasex + precr1 + zona, method=c("Wald"))$ddf,
+      Wald_df= survey::regTermTest(svyglm3_tenpsi_NAQ_Dic_logit, ~~ NAQ_Dic_logit+ mujer + climasex + precr1 + zona, method=c("Wald"))$df,
+      Wald_p= survey::regTermTest(svyglm3_tenpsi_NAQ_Dic_logit, ~~ NAQ_Dic_logit+ mujer + climasex + precr1 + zona, method=c("Wald"))$p),3)
+```
+
+
+# Referencias
+
+<div id="refs"></div>
+
+# Información de la Sesión
+
+```{r}
+save.image(paste0(getwd(),"/rep_validacion_naq_2020.RData"))
+#load("C:/Users/andre/Google Drive/DOCUMENTOS/6.TESIS 2018/_BASE DEF_FINAL/BASDEF_FINAL/01_02_19/Validacion/rep_validacion_naq_2020.RData")
+#xaringan::inf_mr()
+sessionInfo()
+```
