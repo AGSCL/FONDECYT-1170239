@@ -2,7 +2,7 @@
 
 <br>
 
-A continuación encontrará información sobre el proyecto FONDECYT 1170239.
+A continuación encontrará información sobre el proyecto FONDECYT 1170239 (DOI: 10.5281/zenodo.4157282).
 
 <br>
 
