@@ -1,7 +1,5 @@
 # FONDECYT-1170239
 
-## Prevalencia, formas de manifestación y factores facilitadores de la violencia laboral, y sus efectos en la salud mental en población asalariada en Chile atendiendo desiqualdades sociales y de género. Inv. Responsable: Elisa Ansoleaga
-
 <br>
 
 A continuación encontrará información sobre el proyecto FONDECYT 1170239 (DOI: 10.5281/zenodo.4157282).
