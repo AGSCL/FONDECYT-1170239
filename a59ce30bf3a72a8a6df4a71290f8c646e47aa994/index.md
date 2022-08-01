@@ -12,6 +12,6 @@ A continuación encontrará información sobre el proyecto FONDECYT 1170239 (DOI
 - Para acceder a un <ins>resumen de los datos a nivel exploratorio</ins> de manera **dinámica**, favor acceder al siguiente [enlace](https://agscl.shinyapps.io/DataExp/).
 - Para acceder a obtener <ins>asociaciones bivariadas</ins> de manera **dinámica**, favor acceder al siguiente [enlace](https://agscl.shinyapps.io/ContingencyTable/).
 - Para acceder a obtener <ins>asociaciones multivariadas</ins> de manera **dinámica**, favor acceder al siguiente [enlace](https://agscl.shinyapps.io/Resultados_Ponderados/).
-- Para acceder a un <ins>reporte de la validación de la prueba NAQ-R y DLS</ins>, favor acceder al siguiente [enlace](https://rpubs.com/proyectoinvpsykhe/prop_psi_mat_sup2.html).
+- Para acceder a un <ins>reporte de la validación de la prueba NAQ-R y DLS</ins>, favor acceder al siguiente [enlace](https://rpubs.com/proyectoinvpsykhe/prop_psi_mat_sup2).
 - Para acceder a un <ins>resumen de los datos a nivel exploratorio</ins>, favor acceder al siguiente [enlace](report.html).
 - En caso de requerir convertir una base de datos en formato Stata (.dta) a  SPSS (.sav), ingrese al siguiente [enlace](https://agscl.shinyapps.io/UploadFiles/).
